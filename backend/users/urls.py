@@ -17,4 +17,5 @@ urlpatterns = [
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("token/verify/", TokenVerifyView.as_view(), name="token_verify"),
     path("auth/", include("rest_framework.urls")),
+    path("current/", views.RetrieveCurrentUserView.as_view(), name="current_user"),
 ]

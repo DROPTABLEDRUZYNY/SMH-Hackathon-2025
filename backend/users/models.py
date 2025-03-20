@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
@@ -25,9 +25,9 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault("is_superuser", True)
 
         if extra_fields.get("is_staff") is not True:
-            raise ValueError("Superuser musi mieć is_staff=True")
+            raise ValueError("Superuser has to have is_staff=True")
         if extra_fields.get("is_superuser") is not True:
-            raise ValueError("Superuser musi mieć is_superuser=True")
+            raise ValueError("Superuser has to have is_superuser=True")
 
         return self.create_user(email, password, **extra_fields)
 
