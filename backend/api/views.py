@@ -29,7 +29,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.viewsets import GenericViewSet, ModelViewSet, ReadOnlyModelViewSet
 
-User = get_user_model()
+#User = get_user_model()
 
 
 @api_view(["GET"])

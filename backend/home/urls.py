@@ -23,5 +23,6 @@ urlpatterns = [
     #path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-    path('auth/', include('rest_framework.urls')),
+    path('users/', include('users.urls')),
+    
 ]
