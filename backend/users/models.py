@@ -1,8 +1,10 @@
 import datetime
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
+from django.utils import timezone
 
 
 class UserManager(BaseUserManager):
@@ -32,45 +34,43 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-class User(AbstractUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin):
+    #username_validator = UnicodeUsernameValidator()
+    
+    email = models.EmailField("email address", unique=True)
+    first_name = models.CharField("1st name", max_length=150, default="John", blank=True)
+    last_name = models.CharField("last name", max_length=150, default="Doe", blank=True)
+
+    birth_date = models.DateField(default=datetime.date(2005, 1, 1))
+
+    date_joined = models.DateTimeField("date joined", default=timezone.now)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
+    objects = UserManager()
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
+
+    # Usefull fields:
     # ROLE_CHOICES = [
     #     ('STUDENT', 'Student'),
     #     ('PARENT', 'Parent'),
     #     ('TEACHER', 'Teacher'),
     # ]
-    # role = models.CharField(max_length=10, choices=ROLE_CHOICES)
-
-    username_validator = UnicodeUsernameValidator()
-
-    username = models.CharField(
-        "username",
-        max_length=150,
-        unique=True,
-        help_text="Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
-        validators=[username_validator],
-        error_messages={
-            "unique": "A user with that username already exists.",
-        },
-    )
-    first_name = models.CharField(
-        "first name", max_length=150, default="John", blank=True
-    )
-    last_name = models.CharField("last name", max_length=150, default="Doe", blank=True)
-    email = models.EmailField("email address", default="email@example.com")
-
-    birth_date = models.DateField(default=datetime.date(2005, 1, 1))
-    sex = models.CharField(
-        max_length=32, choices=[("M", "Male"), ("F", "Female")], default="M"
-    )
+    # role = models.CharField(max_length=32, choices=ROLE_CHOICES)
+    # sex = models.CharField(max_length=32, choices=[("M", "Male"), ("F", "Female")], default="M")
     # Phone number -
     # https://stackoverflow.com/questions/19130942/whats-the-best-way-to-store-a-phone-number-in-django-models
-
-    objects = UserManager()
 
     def save(self, *args, **kwargs):
         """Ensure first and last names start with capital letters."""
         if self.first_name:
-            self.first_name = self.first_name.capitalize()
+            self.first_name = self.first_name.lower().capitalize()
         if self.last_name:
-            self.last_name = self.last_name.capitalize()
+            self.last_name = self.last_name.lower().capitalize()
         super().save(*args, **kwargs)
+        
+    def clean(self):
+        super().clean()
+        self.email = self.__class__.objects.normalize_email(self.email) 
