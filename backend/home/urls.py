@@ -20,9 +20,7 @@ from rest_framework.routers import DefaultRouter
 #router = DefaultRouter()
 
 urlpatterns = [
-    #path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-    path('users/', include('users.urls')),
-    
+    #path('', include(router.urls)),
 ]

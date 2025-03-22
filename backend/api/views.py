@@ -29,7 +29,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.viewsets import GenericViewSet, ModelViewSet, ReadOnlyModelViewSet
 
-#User = get_user_model()
+# User = get_user_model()
 
 
 @api_view(["GET"])
@@ -49,7 +49,7 @@ class ProductDetailView(RetrieveAPIView):
     #     return Response(serializer.data)
 
 
-class ProductItemsView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
+class ProductItemsViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     permission_classes = []
     queryset = Product.objects.all()
     serializer_class = ProductSerializer

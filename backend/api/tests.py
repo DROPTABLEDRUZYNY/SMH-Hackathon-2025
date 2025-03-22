@@ -1,6 +1,7 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework import status
+from django.urls import reverse
 from .models import Product
 from .serializers import ProductSerializer
 
@@ -40,14 +41,16 @@ class ProductAPITest(TestCase):
         )
 
     def test_get_random_product(self):
-        response = self.client.get("/api/random/")
+        url = reverse("random_product")
+        response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn("name", response.data)
         self.assertIn("price", response.data)
         self.assertIn("description", response.data)
 
     def test_product_list(self):
-        response = self.client.get("/api/products1/")
+        url = reverse("products1-list")
+        response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]["name"], "Test Product")
