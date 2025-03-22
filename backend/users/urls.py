@@ -9,14 +9,17 @@ from rest_framework_simplejwt.views import (
 from . import views
 
 router = DefaultRouter()
-router.register(r"", views.UserViewSet, basename="users") 
+router.register(r"", views.UserViewSet, basename="users")
 
 urlpatterns = [
     path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("token/verify/", TokenVerifyView.as_view(), name="token_verify"),
     path("auth/", include("rest_framework.urls")),
-    path("current/", views.RetrieveCurrentUserView.as_view(), name="current_user"), 
-    path("", include(router.urls)), 
-
+    path(
+        "current/",
+        views.RetrieveUpdateCurrentUserView.as_view(),
+        name="user_current",
+    ),
+    path("", include(router.urls)),
 ]

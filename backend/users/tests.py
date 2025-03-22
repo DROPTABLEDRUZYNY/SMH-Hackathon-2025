@@ -15,15 +15,17 @@ class UserModelTest(TestCase):
         self.user = User.objects.create_user(
             email="test@example.com",
             password="password123",
-            first_name="John",
-            last_name="Doe",
+            first_name="firstNAME",
+            last_name="lastNAME",
         )
 
     def test_user_creation(self):
         self.assertEqual(self.user.email, "test@example.com")
         self.assertTrue(self.user.check_password("password123"))
-        self.assertEqual(self.user.first_name, "John")
-        self.assertEqual(self.user.last_name, "Doe")
+        self.assertEqual(
+            self.user.first_name, "Firstname"
+        )  # Test capitalizing first name
+        self.assertEqual(self.user.last_name, "Lastname")  # Test capitalizing last name
 
 
 class UserSerializerTest(TestCase):
@@ -58,8 +60,8 @@ class UserAPITest(TestCase):
         )
         self.client.force_authenticate(user=self.user)
 
-    def test_get_current_user(self):
-        url = reverse("current_user")
+    def test_get_user_current(self):
+        url = reverse("user_current")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["email"], "test@example.com")
@@ -73,9 +75,9 @@ class UserAPITest(TestCase):
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]["email"], "test@example.com")
 
-    def test_get_current_user_unauthenticated(self):
+    def test_get_user_current_unauthenticated(self):
         self.client.force_authenticate(user=None)
-        url = reverse("current_user")
+        url = reverse("user_current")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
@@ -98,6 +100,10 @@ class JWTAuthenticationTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn("access", response.data)
         self.assertIn("refresh", response.data)
+        if "refresh" in response.data:
+            self.assertTrue(response.data["refresh"])
+        if "access" in response.data:
+            self.assertTrue(response.data["access"])
 
     def test_refresh_token(self):
         refresh = RefreshToken.for_user(self.user)
@@ -115,11 +121,11 @@ class JWTAuthenticationTest(TestCase):
 
     def test_access_protected_view_with_invalid_token(self):
         self.client.credentials(HTTP_AUTHORIZATION="Bearer " + "invalidtoken")
-        url = reverse("current_user")
+        url = reverse("user_current")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_access_protected_view_without_token(self):
-        url = reverse("current_user")
+        url = reverse("user_current")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
