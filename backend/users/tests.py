@@ -79,7 +79,7 @@ class UserAPITest(TestCase):
         self.client.force_authenticate(user=None)
         url = reverse("user_current")
         response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
 class JWTAuthenticationTest(TestCase):
@@ -123,9 +123,9 @@ class JWTAuthenticationTest(TestCase):
         self.client.credentials(HTTP_AUTHORIZATION="Bearer " + "invalidtoken")
         url = reverse("user_current")
         response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_access_protected_view_without_token(self):
         url = reverse("user_current")
         response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
