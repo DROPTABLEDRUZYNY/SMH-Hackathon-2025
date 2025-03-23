@@ -6,8 +6,6 @@ from rest_framework.mixins import RetrieveModelMixin
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ReadOnlyModelViewSet
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.decorators import action
 from users.serializers import (
     EmptySerializer,
     UserRegistrationSerializer,
@@ -64,34 +62,6 @@ class UserViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    @action(
-        detail=False,
-        methods=["post"],
-        serializer_class=EmptySerializer,
-    )
-    def logout(self, request):
-        """Logout the current user by blacklisting their refresh token."""
-
-        refresh_token = request.data.get("refresh")
-        if not refresh_token:
-            return Response(
-                {"error": "Refresh token is required."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        try:
-            token = RefreshToken(refresh_token)
-            token.blacklist()
-            return Response(
-                {"detail": "Successfully logged out."},
-                status=status.HTTP_205_RESET_CONTENT,
-            )
-        except Exception:
-            return Response(
-                {"error": "Invalid token."}, status=status.HTTP_400_BAD_REQUEST
-            )
-
 
 class RetrieveUpdateCurrentUserView(RetrieveAPIView, UpdateAPIView):
     # Using APIViews instead of mixins because of automatic method binding
