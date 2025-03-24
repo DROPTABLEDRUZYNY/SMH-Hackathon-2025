@@ -2,47 +2,32 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { login } from "@/services/authService";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 type LoginForm = {
   email: string;
   password: string;
 };
 
-async function getCsrfToken() {
-    await fetch("http://localhost:8000/api/csrf/", {
-      method: "GET",
-      credentials: "include",
-    });
-  
-    const csrfToken = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("csrftoken="))
-      ?.split("=")[1];
-  
-    return csrfToken;
-  }
-
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
+  const [sessionId, setSessionId] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginForm>();
-  
+  const router = useRouter();
+
   const onSubmit = async (data: LoginForm) => {
-    let csrfToken = await getCsrfToken();
-
     try {
-      const res = await fetch("http://localhost:8000/api/users/auth/login/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json","X-CSRFToken": csrfToken || ""},
-        body: JSON.stringify(data),
-        credentials: "include", // Send cookies
-      });
-
-      if (!res.ok) throw new Error("Invalid credentials");
+      const sessionId = await login(data.email, data.password);
+      setSessionId(sessionId || null);
       console.log("Logged in!");
+      router.push("/");
     } catch (err) {
       setError("Invalid email or password");
     }
@@ -52,8 +37,9 @@ export default function LoginPage() {
     <div className="max-w-md mx-auto mt-10">
       <h1 className="text-2xl font-bold mb-4">Login</h1>
       {error && <p className="text-red-500">{error}</p>}
+      {sessionId && <p className="text-green-500">Session ID: {sessionId}</p>}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <input
+        <Input
           {...register("email", { required: "Email is required" })}
           type="email"
           placeholder="Email"
@@ -61,7 +47,7 @@ export default function LoginPage() {
         />
         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
 
-        <input
+        <Input
           {...register("password", { required: "Password is required" })}
           type="password"
           placeholder="Password"
@@ -69,9 +55,9 @@ export default function LoginPage() {
         />
         {errors.password && <p className="text-red-500">{errors.password.message}</p>}
 
-        <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">
+        <Button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">
           Login
-        </button>
+        </Button>
       </form>
     </div>
   );
