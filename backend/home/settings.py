@@ -27,13 +27,16 @@ SECRET_KEY = "django-insecure-4bhb#-=svfll9sbs$1#w)(3uq08zg=-cpep6tdtwf!@sx=mm=4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
-# ALLOWED_HOSTS = [
-#     "localhost",
-#     "0.0.0.0",
-# ]
-# # '*'
+ALLOWED_HOSTS = [
+    "localhost",
+    "localhost:3000",
+    "http://localhost:3000"
+    "https://localhost:3000"
+    "0.0.0.0",
+    "*",
+]
+# '*'
 
 
 AUTH_USER_MODEL = "users.User"
@@ -59,9 +62,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -72,9 +75,24 @@ MIDDLEWARE = [
 ROOT_URLCONF = "home.urls"
 
 # CORS_URLS_REGEX = r"^/api/.*$"
+CORS_ALLOW_CREDENTIALS = True
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://localhost:3000",
+    "http://192.168.0.213:3000",
+    "https://192.168.0.213:3000",
+    "http://localhost",
+    "https://localhost",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "https://localhost:3000",
+    "http://192.168.0.213:3000",
+    "https://192.168.0.213:3000",
+    "http://localhost",
+    "https://localhost",
 ]
 
 TEMPLATES = [
@@ -152,3 +170,5 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
     ]
 }
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'

@@ -1,6 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
+from api.views import GetCSRFToken
 
 from . import views
 
@@ -13,4 +14,5 @@ urlpatterns = [
     path("", include(router.urls)),
     path("random/", views.get_random_product, name="random_product"),
     path("users/", include("users.urls")),
+    path("csrf/", GetCSRFToken.as_view(), name="get_csrf"),
 ]

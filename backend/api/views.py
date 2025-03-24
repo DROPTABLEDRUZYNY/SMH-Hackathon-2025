@@ -3,6 +3,8 @@ from django.shortcuts import render
 
 from rest_framework.response import Response
 from rest_framework.decorators import action, api_view
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.utils.decorators import method_decorator
 
 from django.http import JsonResponse
 
@@ -30,6 +32,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet, ModelViewSet, ReadOnlyModelViewSet
 
 # User = get_user_model()
+
+
+@method_decorator(ensure_csrf_cookie, name="dispatch")
+class GetCSRFToken(APIView):
+    def get(self, request):
+        return Response({"message": "CSRF cookie set"})
 
 
 @api_view(["GET"])
