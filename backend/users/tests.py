@@ -1,3 +1,4 @@
+import json
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
@@ -59,8 +60,8 @@ class UserAPITest(TestCase):
             last_name="Doe",
         )
         self.register_url = reverse("users-register")
-        self.login_url = reverse("rest_framework:login")
-        self.logout_url = reverse("rest_framework:logout")
+        self.login_url = reverse("login")
+        self.logout_url = reverse("logout")
         self.current_user_url = reverse("user_current")
 
     def test_register_new_user(self):
@@ -101,17 +102,39 @@ class UserAPITest(TestCase):
 
     def test_login_user(self):
         data = {
-            "username": self.user.email,
+            "email": self.user.email,
             "password": "password123",
         }
-        login_url_with_next = f"{self.login_url}?next=/api/"
-        response = self.client.post(login_url_with_next, data, follow=True)
+        response = self.client.post(
+            self.login_url,
+            data=json.dumps(data),
+            content_type="application/json",
+            follow=True,
+        )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-    
-    def test_logout_user(self):
-        self.client.force_authenticate(user=self.user)
+
+        sessionid = self.client.cookies.get("sessionid")
+        self.assertIsNotNone(sessionid)
+
+    def test_login_logout_user(self):
+        data = {
+            "email": self.user.email,
+            "password": "password123",
+        }
+        response = self.client.post(
+            self.login_url,
+            data=json.dumps(data),
+            content_type="application/json",
+            follow=True,
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIsNotNone(self.client.cookies.get("sessionid"))
+
         response = self.client.post(self.logout_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        response = self.client.get(self.current_user_url)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_get_current_user(self):
         self.client.force_authenticate(user=self.user)

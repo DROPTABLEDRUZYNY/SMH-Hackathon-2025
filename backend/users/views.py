@@ -36,7 +36,34 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet, ReadOnlyModelV
 
 User = get_user_model()
 
+from django.contrib.auth import authenticate, login, logout
+from django.http import JsonResponse
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.utils.decorators import method_decorator
+from django.views import View
+import json
 
+@method_decorator(ensure_csrf_cookie, name="dispatch")
+class LoginView(View):
+    def post(self, request):
+        
+        data = json.loads(request.body or "{}")
+        username = data.get("email")
+        password = data.get("password")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is None:
+            return JsonResponse({"error": "Invalid credentials"}, status=400)
+
+        login(request, user)
+        return JsonResponse({"message": "Logged in successfully"})
+
+class LogoutView(View):
+    def post(self, request):
+        logout(request)
+        return JsonResponse({"message": "Logged out"})
+    
 class UserViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
 
     queryset = User.objects.all()
