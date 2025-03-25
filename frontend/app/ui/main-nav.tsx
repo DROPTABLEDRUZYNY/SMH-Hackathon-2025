@@ -4,7 +4,7 @@ import SomeLogo from '@/app/ui/some-logo';
 import { PowerIcon } from '@heroicons/react/24/outline';
 //import { signOut } from '@/auth';
 
-export default function SideNav() {
+export default function MainNav() {
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2">
       <Link
