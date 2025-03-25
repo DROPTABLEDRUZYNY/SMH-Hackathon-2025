@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 type RegisterForm = {
   email: string;
@@ -12,6 +13,7 @@ type RegisterForm = {
 export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -35,6 +37,10 @@ export default function RegisterPage() {
       if (!res.ok) throw new Error("Registration failed");
       setSuccess("Registered successfully!");
       setError(null);
+      
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000);
     } catch (err) {
       setError("Registration failed");
       setSuccess(null);
