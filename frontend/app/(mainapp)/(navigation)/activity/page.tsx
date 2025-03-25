@@ -1,5 +1,5 @@
 import Image from "next/image";
-import UserActivity from "@/app/ui/activity/user_activity";
+import UserActivity from "@/app/ui/activity/userActivity";
 
 export default function Page() {
   const userData = {

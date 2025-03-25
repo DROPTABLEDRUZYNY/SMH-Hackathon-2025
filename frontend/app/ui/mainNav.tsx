@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import NavLinks from '@/app/ui/nav-links';
-import SomeLogo from '@/app/ui/some-logo';
+import NavLinks from '@/app/ui/navLinks';
+import SomeLogo from '@/app/ui/someLogo';
 import { PowerIcon } from '@heroicons/react/24/outline';
 //import { signOut } from '@/auth';
 

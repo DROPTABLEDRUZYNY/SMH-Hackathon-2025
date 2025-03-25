@@ -3,7 +3,7 @@ import '@/app/globals.css';
 import { inter } from '@/app/ui/fonts';
 
 import localFont from "next/font/local";
-import MainNav from "@/app/ui/main-nav";
+import MainNav from "@/app/ui/mainNav";
 
 
 export const metadata: Metadata = {
