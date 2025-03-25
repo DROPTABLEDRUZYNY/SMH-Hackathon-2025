@@ -52,22 +52,34 @@ export default function RegisterPage() {
         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
 
         <input
-          {...register("password", { required: "Password is required", minLength: 6 })}
+          {...register("password", {
+            required: "Password is required",
+            minLength: 6,
+          })}
           type="password"
           placeholder="Password"
           className="w-full p-2 border border-gray-300 rounded"
         />
-        {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+        {errors.password && (
+          <p className="text-red-500">{errors.password.message}</p>
+        )}
 
         <input
-          {...register("confirmPassword", { required: "Please confirm password" })}
+          {...register("confirmPassword", {
+            required: "Please confirm password",
+          })}
           type="password"
           placeholder="Confirm Password"
           className="w-full p-2 border border-gray-300 rounded"
         />
-        {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword.message}</p>}
+        {errors.confirmPassword && (
+          <p className="text-red-500">{errors.confirmPassword.message}</p>
+        )}
 
-        <button type="submit" className="w-full bg-green-600 text-white p-2 rounded">
+        <button
+          type="submit"
+          className="w-full bg-green-600 text-white p-2 rounded"
+        >
           Register
         </button>
       </form>

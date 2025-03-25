@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -8,13 +8,13 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
+} from "@/components/ui/chart";
 
 interface ChartBar1Props {
   data: { day: string; sales: number; price: number }[];
@@ -59,5 +59,5 @@ export default function ChartBar1({ data, config }: ChartBar1Props) {
         </ChartContainer>
       </CardContent>
     </Card>
-  )
+  );
 }

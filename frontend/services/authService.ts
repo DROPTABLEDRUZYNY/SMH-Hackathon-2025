@@ -1,20 +1,22 @@
+const API_PATH = "http://localhost:8000/api";
+
 async function getCsrfToken() {
-    await fetch("http://localhost:8000/api/csrf/", {
-      method: "GET",
-      credentials: "include",
-    });
-  
-    const csrfToken = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("csrftoken="))
-      ?.split("=")[1];
-  
-    return csrfToken;
-  }
+  await fetch(`${API_PATH}/csrf/`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  const csrfToken = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("csrftoken="))
+    ?.split("=")[1];
+
+  return csrfToken;
+}
 
 export async function login(email: string, password: string) {
-  let csrfToken = await getCsrfToken();   
-  const res = await fetch("http://localhost:8000/api/users/login/", {
+  let csrfToken = await getCsrfToken();
+  const res = await fetch(`${API_PATH}/users/login/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -38,10 +40,12 @@ export async function login(email: string, password: string) {
 }
 
 export async function logout() {
-  const res = await fetch("http://localhost:8000/api/users/logout/", {
+  let csrfToken = await getCsrfToken();
+  const res = await fetch(`${API_PATH}/users/logout/`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",   // TODO: Add X-CSRFToken header (?)
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrfToken || "",
     },
     credentials: "include",
   });

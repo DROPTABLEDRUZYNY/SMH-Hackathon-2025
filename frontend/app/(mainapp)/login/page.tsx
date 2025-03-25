@@ -53,9 +53,14 @@ export default function LoginPage() {
           placeholder="Password"
           className="w-full p-2 border border-gray-300 rounded"
         />
-        {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+        {errors.password && (
+          <p className="text-red-500">{errors.password.message}</p>
+        )}
 
-        <Button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">
+        <Button
+          type="submit"
+          className="w-full bg-blue-600 text-white p-2 rounded"
+        >
           Login
         </Button>
       </form>

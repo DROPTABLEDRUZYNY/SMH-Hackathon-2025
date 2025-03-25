@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { TrendingUp } from "lucide-react"
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
+import { TrendingUp } from "lucide-react";
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
 import {
   Card,
@@ -10,16 +10,18 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
+} from "@/components/ui/chart";
 
-
-export default function StatsLineChart({ data, config }: {
+export default function StatsLineChart({
+  data,
+  config,
+}: {
   data: { month: string; desktop: number }[];
   config: ChartConfig;
 }) {
@@ -41,7 +43,7 @@ export default function StatsLineChart({ data, config }: {
           >
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey='month'
+              dataKey="month"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
@@ -52,7 +54,7 @@ export default function StatsLineChart({ data, config }: {
               content={<ChartTooltipContent hideLabel />}
             />
             <Line
-              dataKey='desktop'
+              dataKey="desktop"
               type="natural"
               stroke="var(--color-desktop)"
               strokeWidth={2}
@@ -70,5 +72,5 @@ export default function StatsLineChart({ data, config }: {
         </div>
       </CardFooter>
     </Card>
-  )
+  );
 }

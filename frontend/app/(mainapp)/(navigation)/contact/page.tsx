@@ -1,15 +1,12 @@
-import {ProfileForm} from "@/app/ui/contact/contactForm";
+import { ProfileForm } from "@/app/ui/contact/contactForm";
 
 export default function Page() {
-
-    return (
-      <div className="flex flex-col md:flex-col gap-4 md:overflow-hidden">
-        <div>
-            <h1>Contact Us</h1>
-            <ProfileForm/>
-        </div>
-        
+  return (
+    <div className="flex flex-col md:flex-col gap-4 md:overflow-hidden">
+      <div>
+        <h1>Contact Us</h1>
+        <ProfileForm />
       </div>
-    );
-  }
-  
+    </div>
+  );
+}

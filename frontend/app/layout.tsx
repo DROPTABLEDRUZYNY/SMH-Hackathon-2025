@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { inter } from '@/app/ui/fonts';
+import { inter } from "@/app/ui/fonts";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,10 +15,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | LiveActive',
-    default: 'LiveActive',
+    template: "%s | LiveActive",
+    default: "LiveActive",
   },
-  description: 'Example site called LiveActive',
+  description: "Example site called LiveActive",
 };
 
 export default function RootLayout({

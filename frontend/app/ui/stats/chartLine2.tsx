@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts"
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -8,13 +8,13 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
+} from "@/components/ui/chart";
 
 interface ChartLine2Props {
   data: { day: string; price: number }[];
@@ -53,5 +53,5 @@ export default function ChartLine2({ data, config }: ChartLine2Props) {
         </ChartContainer>
       </CardContent>
     </Card>
-  )
+  );
 }
