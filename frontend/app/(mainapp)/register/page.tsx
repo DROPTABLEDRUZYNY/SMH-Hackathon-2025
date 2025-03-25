@@ -11,6 +11,7 @@ type RegisterForm = {
 
 export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -32,9 +33,11 @@ export default function RegisterPage() {
       });
 
       if (!res.ok) throw new Error("Registration failed");
-      console.log("Registered successfully!");
+      setSuccess("Registered successfully!");
+      setError(null);
     } catch (err) {
       setError("Registration failed");
+      setSuccess(null);
     }
   };
 
@@ -42,6 +45,7 @@ export default function RegisterPage() {
     <div className="max-w-md mx-auto mt-10">
       <h1 className="text-2xl font-bold mb-4">Register</h1>
       {error && <p className="text-red-500">{error}</p>}
+      {success && <p className="text-green-500">{success}</p>}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <input
           {...register("email", { required: "Email is required" })}
@@ -54,7 +58,10 @@ export default function RegisterPage() {
         <input
           {...register("password", {
             required: "Password is required",
-            minLength: 6,
+            minLength: {
+              value: 3,
+              message: "Password must be at least 3 characters long"
+            }
           })}
           type="password"
           placeholder="Password"
@@ -78,7 +85,7 @@ export default function RegisterPage() {
 
         <button
           type="submit"
-          className="w-full bg-green-600 text-white p-2 rounded"
+          className="w-full bg-green-600 hover:bg-green-700 text-white p-2 rounded"
         >
           Register
         </button>
