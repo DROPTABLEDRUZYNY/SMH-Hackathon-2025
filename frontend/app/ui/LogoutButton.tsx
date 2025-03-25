@@ -4,7 +4,13 @@ import { useRouter } from "next/navigation";
 import { logout } from "@/services/authService";
 import { Button } from "@/components/ui/button";
 
-export default function LogoutButton() {
+export default function LogoutButton({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -18,8 +24,8 @@ export default function LogoutButton() {
   };
 
   return (
-    <Button onClick={handleLogout} className="bg-red-600 text-white p-2 rounded">
-      Logout
-    </Button>
+    <div onClick={handleLogout} className={className}>
+      {children}
+    </div>
   );
 }
