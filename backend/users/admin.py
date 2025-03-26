@@ -11,7 +11,7 @@ from django.core.exceptions import ValidationError
 
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
-    fields, plus a repeated password."""
+    fields, some optionam plus a repeated password."""
 
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
     password2 = forms.CharField(
@@ -20,7 +20,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ["email", "birth_date"]
+        fields = ["first_name", "last_name", "email", "birth_date", "phone_number"]
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -60,13 +60,25 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ("email", "first_name", "last_name", "birth_date", "is_staff")
+    list_display = (
+        "email",
+        "first_name",
+        "last_name",
+        "phone_number",
+        "birth_date",
+        "is_staff",
+    )
     list_filter = ["is_staff"]
+    # Edit user page
     fieldsets = [
         (None, {"fields": ["email", "password"]}),
-        ("Personal info", {"fields": ["birth_date"]}),
+        (
+            "Personal info",
+            {"fields": ["first_name", "last_name", "birth_date", "phone_number"]},
+        ),
         ("Permissions", {"fields": ["is_staff"]}),
     ]
+
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
     add_fieldsets = [
@@ -74,7 +86,15 @@ class UserAdmin(BaseUserAdmin):
             None,
             {
                 "classes": ["wide"],
-                "fields": ["email", "birth_date", "password1", "password2"],
+                "fields": [
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "birth_date",
+                    "phone_number",
+                    "password1",
+                    "password2",
+                ],
             },
         ),
     ]
@@ -83,20 +103,6 @@ class UserAdmin(BaseUserAdmin):
     filter_horizontal = []
 
 
-# Now register the new UserAdmin...
 admin.site.register(User, UserAdmin)
-# ... and, since we're not using Django's built-in permissions,
-# unregister the Group model from admin.
-admin.site.unregister(Group)
 
-
-# class CustomUserAdmin(UserAdmin):
-#     model = User
-
-#     ordering = ("email",)
-
-#     list_display = ("email", "first_name", "last_name")
-#     # list_filter = ()
-
-
-# admin.site.register(User, CustomUserAdmin)
+# admin.site.unregister(Group)
