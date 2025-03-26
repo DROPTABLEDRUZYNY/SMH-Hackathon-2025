@@ -15,6 +15,5 @@ urlpatterns = [
         views.RetrieveUpdateCurrentUserView.as_view(),
         name="user_current",
     ),
-    path("api-auth/", include("rest_framework.urls")),  # auth ONLY for browsable API 
     path("", include(router.urls)),
 ]

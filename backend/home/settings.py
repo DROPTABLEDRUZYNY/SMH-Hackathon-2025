@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     # Third party apps
     "corsheaders",
     "rest_framework",
+    'drf_spectacular',
     # Local apps
     "users",
     "api",
@@ -155,7 +156,14 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
-    ]
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'My API',
+    'DESCRIPTION': 'API documentation',
+    'VERSION': '1.0.0',
+}

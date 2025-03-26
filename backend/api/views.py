@@ -1,12 +1,13 @@
 from django.contrib.auth import get_user_model
-from django.shortcuts import render
-
+from django.db.migrations import serializer
 from rest_framework.response import Response
 from rest_framework.decorators import action, api_view
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.utils.decorators import method_decorator
 
 from django.http import JsonResponse
+
+from users.serializers import EmptySerializer
 
 from .models import Product
 from .serializers import ProductSerializer
@@ -36,25 +37,24 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet, ReadOnlyModelV
 
 @method_decorator(ensure_csrf_cookie, name="dispatch")
 class GetCSRFToken(APIView):
+    serializer_class = EmptySerializer
+
     def get(self, request):
         return Response({"message": "CSRF cookie set"})
 
 
-@api_view(["GET"])
-def get_random_product(request):
-    serializer = ProductSerializer(Product.objects.order_by("?").first(), many=False)
-    return Response(serializer.data)
+class RandomProductView(APIView):
+    def get(self, request):
+        product = Product.objects.order_by("?").first()
+        if product:
+            return Response(ProductSerializer(product).data)
+        return Response({"error": "No products available"}, status=404)
 
 
 class ProductDetailView(RetrieveAPIView):
     permission_classes = []
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-
-    # def get(self, request):
-    #     student_groups = StudentGroup.objects.all()
-    #     serializer = StudentGroupSerializer(student_groups, many=True)
-    #     return Response(serializer.data)
 
 
 class ProductItemsViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
