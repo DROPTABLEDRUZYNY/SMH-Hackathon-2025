@@ -18,6 +18,7 @@ class UserModelTest(TestCase):
             password="password123",
             first_name="firstNAME",
             last_name="lastNAME",
+            phone_number="+48123456789",
         )
 
     def test_user_creation(self):
@@ -27,6 +28,15 @@ class UserModelTest(TestCase):
             self.user.first_name, "Firstname"
         )  # Test capitalizing first name
         self.assertEqual(self.user.last_name, "Lastname")  # Test capitalizing last name
+        self.assertEqual(self.user.phone_number, "+48123456789")  # Test phone number
+
+    def test_phone_number_unique(self):
+        with self.assertRaises(Exception):
+            User.objects.create_user(
+                email="another@example.com",
+                password="password123",
+                phone_number="+48123456789",
+            )
 
 
 class UserSerializerTest(TestCase):
@@ -36,6 +46,7 @@ class UserSerializerTest(TestCase):
             password="password123",
             first_name="John",
             last_name="Doe",
+            phone_number="+48123456789",
         )
         self.serializer = UserSerializer(instance=self.user)
 
@@ -43,11 +54,14 @@ class UserSerializerTest(TestCase):
         data = self.serializer.data
         self.assertEqual(
             set(data.keys()),
-            set(["id", "first_name", "last_name", "email", "birth_date"]),
+            set(
+                ["id", "first_name", "last_name", "email", "birth_date", "phone_number"]
+            ),
         )
         self.assertEqual(data["email"], "test@example.com")
         self.assertEqual(data["first_name"], "John")
         self.assertEqual(data["last_name"], "Doe")
+        self.assertEqual(data["phone_number"], "+48123456789")
 
 
 class UserAPITest(TestCase):
@@ -58,6 +72,7 @@ class UserAPITest(TestCase):
             password="password123",
             first_name="John",
             last_name="Doe",
+            phone_number="+48123456789",
         )
         self.register_url = reverse("users-register")
         self.login_url = reverse("login")
@@ -71,10 +86,12 @@ class UserAPITest(TestCase):
             "first_name": "New",
             "last_name": "User",
             "birth_date": "2000-01-01",
+            "phone_number": "+48123456780",
         }
         response = self.client.post(self.register_url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["email"], "newuser@example.com")
+        self.assertEqual(response.data["phone_number"], "+48123456780")
 
     def test_register_authenticated_user(self):
         self.client.force_authenticate(user=self.user)
@@ -84,6 +101,7 @@ class UserAPITest(TestCase):
             "first_name": "New",
             "last_name": "User",
             "birth_date": "2000-01-01",
+            "phone_number": "+48123456780",
         }
         response = self.client.post(self.register_url, data)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
@@ -96,6 +114,7 @@ class UserAPITest(TestCase):
             "first_name": "",
             "last_name": "",
             "birth_date": "invalid-date",
+            "phone_number": "invalid-phone",
         }
         response = self.client.post(self.register_url, data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -143,6 +162,7 @@ class UserAPITest(TestCase):
         self.assertEqual(response.data["email"], "test@example.com")
         self.assertEqual(response.data["first_name"], "John")
         self.assertEqual(response.data["last_name"], "Doe")
+        self.assertEqual(response.data["phone_number"], "+48123456789")
 
     def test_get_current_user_unauthenticated(self):
         response = self.client.get(self.current_user_url)
