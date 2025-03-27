@@ -35,8 +35,6 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    #username_validator = UnicodeUsernameValidator()
-    
     email = models.EmailField("email address", unique=True)
     first_name = models.CharField("1st name", max_length=150, default="John", blank=True)
     last_name = models.CharField("last name", max_length=150, default="Doe", blank=True)
@@ -53,17 +51,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
-    # Usefull fields:
-    # ROLE_CHOICES = [
-    #     ('STUDENT', 'Student'),
-    #     ('PARENT', 'Parent'),
-    #     ('TEACHER', 'Teacher'),
-    # ]
-    # role = models.CharField(max_length=32, choices=ROLE_CHOICES)
-    # sex = models.CharField(max_length=32, choices=[("M", "Male"), ("F", "Female")], default="M")
-    # Phone number -
-    # https://stackoverflow.com/questions/19130942/whats-the-best-way-to-store-a-phone-number-in-django-models
-
     def save(self, *args, **kwargs):
         """Ensure first and last names start with capital letters."""
         if self.first_name:
@@ -78,3 +65,16 @@ class User(AbstractBaseUser, PermissionsMixin):
         
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+    
+    #username_validator = UnicodeUsernameValidator()
+    
+    # Usefull fields:
+    # ROLE_CHOICES = [
+    #     ('STUDENT', 'Student'),
+    #     ('PARENT', 'Parent'),
+    #     ('TEACHER', 'Teacher'),
+    # ]
+    # role = models.CharField(max_length=32, choices=ROLE_CHOICES)
+    # sex = models.CharField(max_length=32, choices=[("M", "Male"), ("F", "Female")], default="M")
+    # Phone number -
+    # https://stackoverflow.com/questions/19130942/whats-the-best-way-to-store-a-phone-number-in-django-models

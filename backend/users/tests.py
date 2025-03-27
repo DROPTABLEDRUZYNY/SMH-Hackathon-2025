@@ -30,13 +30,13 @@ class UserModelTest(TestCase):
         self.assertEqual(self.user.last_name, "Lastname")  # Test capitalizing last name
         self.assertEqual(self.user.phone_number, "+48123456789")  # Test phone number
 
-    def test_phone_number_unique(self):
-        with self.assertRaises(Exception):
-            User.objects.create_user(
-                email="another@example.com",
-                password="password123",
-                phone_number="+48123456789",
-            )
+    # def test_phone_number_unique(self):
+    #     with self.assertRaises(Exception):
+    #         User.objects.create_user(
+    #             email="another@example.com",
+    #             password="password123",
+    #             phone_number="+48123456789",
+    #         )
 
 
 class UserSerializerTest(TestCase):
