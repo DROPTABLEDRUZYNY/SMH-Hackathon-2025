@@ -2,9 +2,9 @@ from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
-from .models import Product
-from .serializers import ProductSerializer
-
+from .models import Product, Event
+from .serializers import ProductSerializer, EventSerializer
+from datetime import datetime
 
 class ProductModelTest(TestCase):
     def setUp(self):
@@ -54,3 +54,60 @@ class ProductAPITest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]["name"], "Test Product")
+
+
+class EventModelTest(TestCase):
+    def setUp(self):
+        self.event = Event.objects.create(
+            name="Test Event",
+            description="Test Description",
+            date_start=datetime(2025, 3, 28, 10, 0, 0),
+            latitude=52.2297,
+            longitude=21.0122,
+        )
+
+    def test_event_creation(self):
+        self.assertEqual(self.event.name, "Test Event")
+        self.assertEqual(self.event.description, "Test Description")
+        self.assertEqual(self.event.date_start.isoformat(), "2025-03-28T10:00:00+00:00")
+        self.assertEqual(self.event.latitude, 52.2297)
+        self.assertEqual(self.event.longitude, 21.0122)
+
+
+class EventSerializerTest(TestCase):
+    def setUp(self):
+        self.event = Event.objects.create(
+            name="Test Event",
+            description="Test Description",
+            date_start="2025-03-28T10:00:00Z",
+            latitude=52.2297,
+            longitude=21.0122,
+        )
+        self.serializer = EventSerializer(instance=self.event)
+
+    def test_serializer_fields(self):
+        data = self.serializer.data
+        self.assertEqual(
+            set(data.keys()),
+            set(
+                ["id", "name", "description", "date_start", "latitude", "longitude"]
+            ),  # , "participants"
+        )
+        self.assertEqual(data["name"], "Test Event")
+        self.assertEqual(data["description"], "Test Description")
+        self.assertEqual(data["date_start"], "2025-03-28T10:00:00Z")
+        self.assertEqual(data["latitude"], 52.2297)
+        self.assertEqual(data["longitude"], 21.0122)
+
+
+class EventAPITest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.event = Event.objects.create(
+            name="Test Event",
+            description="Test Description",
+            date_start="2025-03-28T10:00:00Z",
+            latitude=52.2297,
+            longitude=21.0122,
+        )
+        self.event_list_url = reverse("event-list")
