@@ -27,13 +27,9 @@ SECRET_KEY = "django-insecure-4bhb#-=svfll9sbs$1#w)(3uq08zg=-cpep6tdtwf!@sx=mm=4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+USE_TZ = False
 
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-    "0.0.0.0",
-    "[::1]"
-]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "0.0.0.0", "[::1]"]
 # '*'
 
 
@@ -49,10 +45,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Third party apps
-    'phone_field',
+    "phone_field",
     "corsheaders",
     "rest_framework",
-    'drf_spectacular',
+    "drf_spectacular",
     # Local apps
     "users",
     "api",
@@ -158,13 +154,13 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
     ],
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'My API',
-    'DESCRIPTION': 'API documentation',
-    'VERSION': '1.0.0',
+    "TITLE": "My API",
+    "DESCRIPTION": "API documentation",
+    "VERSION": "1.0.0",
 }

@@ -1,3 +1,9 @@
+TODO
+
+## Tech stack
+
+The project was made with Django Rest Framework and SQLite as a backend and Next.js as a frontend. Shadcn was used as a base for our own components styled with Tailwind CSS.
+
 ## How to run
 
 You have to have python,pip and npm installed to run this project.
