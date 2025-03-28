@@ -72,11 +72,43 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://localhost:3000",
+    "http://localhost:3001",
+    "https://localhost:3001",
+    "http://localhost:3002",
+    "https://localhost:3002",
+    "http://localhost:3003",
+    "https://localhost:3003",
+    "http://localhost:3004",
+    "https://localhost:3004",
+    "http://localhost:3005",
+    "https://localhost:3005",
+    "http://localhost:3006",
+    "https://localhost:3006",
+    "http://localhost:3007",
+    "https://localhost:3007",
+    "http://localhost:3008",
+    "https://localhost:3008",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "https://localhost:3000",
+    "http://localhost:3001",
+    "https://localhost:3001",
+    "http://localhost:3002",
+    "https://localhost:3002",
+    "http://localhost:3003",
+    "https://localhost:3003",
+    "http://localhost:3004",
+    "https://localhost:3004",
+    "http://localhost:3005",
+    "https://localhost:3005",
+    "http://localhost:3006",
+    "https://localhost:3006",
+    "http://localhost:3007",
+    "https://localhost:3007",
+    "http://localhost:3008",
+    "https://localhost:3008",
 ]
 
 TEMPLATES = [
