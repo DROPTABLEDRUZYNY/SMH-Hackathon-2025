@@ -7,6 +7,13 @@ from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
+from django.contrib.auth import authenticate, login, logout
+from django.http import JsonResponse
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.utils.decorators import method_decorator
+from django.views import View
+
+import json
 from users.serializers import (
     EmptySerializer,
     UserRegistrationSerializer,
@@ -35,14 +42,11 @@ from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.viewsets import GenericViewSet, ModelViewSet, ReadOnlyModelViewSet
 
-User = get_user_model()
+import logging
 
-from django.contrib.auth import authenticate, login, logout
-from django.http import JsonResponse
-from django.views.decorators.csrf import ensure_csrf_cookie
-from django.utils.decorators import method_decorator
-from django.views import View
-import json
+logger = logging.getLogger(__name__)
+
+User = get_user_model()
 
 
 @method_decorator(ensure_csrf_cookie, name="dispatch")
@@ -66,9 +70,11 @@ class LoginView(View):
         user = authenticate(request, username=username, password=password)
 
         if user is None:
+            logger.warning(f"Invalid login attempt for email: {username}")
             return JsonResponse({"error": "Invalid credentials"}, status=400)
 
         login(request, user)
+        logger.info(f"User logged in successfully: {username}")
         return JsonResponse({"message": "Logged in successfully"})
 
 
@@ -79,7 +85,13 @@ class LoginView(View):
 )
 class LogoutView(View):
     def post(self, request):
+        logger.info(f"User logging out: {request.user.email if request.user.is_authenticated else 'Anonymous'}")
+        if not request.user.is_authenticated:
+            return JsonResponse({"message": "User already logged out"})
+        
+        email = request.user.email
         logout(request)
+        logger.info(f"Logged out user: {email}")
         return JsonResponse({"message": "Logged out"})
 
 

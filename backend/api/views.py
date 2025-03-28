@@ -4,13 +4,11 @@ from rest_framework.response import Response
 from rest_framework.decorators import action, api_view
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.utils.decorators import method_decorator
-
-from django.http import JsonResponse
-
-from users.serializers import EmptySerializer
+from drf_spectacular.utils import extend_schema
 
 from .models import Product
 from .serializers import ProductSerializer
+from users.serializers import EmptySerializer
 
 from rest_framework.views import APIView
 from rest_framework.mixins import (
@@ -29,11 +27,11 @@ from rest_framework.generics import (
     DestroyAPIView,
 )
 from rest_framework.permissions import IsAuthenticated
-
 from rest_framework.viewsets import GenericViewSet, ModelViewSet, ReadOnlyModelViewSet
 
-from drf_spectacular.utils import extend_schema
+import logging
 
+logger = logging.getLogger(__name__)
 # User = get_user_model()
 
 

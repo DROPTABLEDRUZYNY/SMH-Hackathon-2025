@@ -1,9 +1,19 @@
 from rest_framework import serializers
-
 from .models import Product, Event
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        logger.info(f"Creating new product with data: {validated_data}")
+        return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        logger.info(f"Updating product {instance.id} with data: {validated_data}")
+        return super().update(instance, validated_data)
 
     class Meta:
         model = Product
@@ -21,5 +31,14 @@ class EventSerializer(serializers.ModelSerializer):
             "date_start",
             "latitude",
             "longitude",
-            #"participants",
+            # "participants",
         ]
+        
+    def create(self, validated_data):
+        logger.info(f"Creating new event with data: {validated_data}")
+        return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        logger.info(f"Updating event {instance.id} with data: {validated_data}")
+        return super().update(instance, validated_data)
+
