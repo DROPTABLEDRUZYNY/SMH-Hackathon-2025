@@ -1,10 +1,11 @@
 from django.test import TestCase
+from django.utils.timezone import datetime, make_aware
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
 from .models import Product, Event
 from .serializers import ProductSerializer, EventSerializer
-from datetime import datetime
+
 
 class ProductModelTest(TestCase):
     def setUp(self):
@@ -61,7 +62,9 @@ class EventModelTest(TestCase):
         self.event = Event.objects.create(
             name="Test Event",
             description="Test Description",
-            date_start=datetime(2025, 3, 28, 10, 0, 0),
+            date_start=make_aware(
+                datetime(2025, 3, 28, 10, 0, 0)
+            ),  # Make datetime timezone-aware
             latitude=52.2297,
             longitude=21.0122,
         )
@@ -69,7 +72,7 @@ class EventModelTest(TestCase):
     def test_event_creation(self):
         self.assertEqual(self.event.name, "Test Event")
         self.assertEqual(self.event.description, "Test Description")
-        self.assertEqual(self.event.date_start.isoformat(), "2025-03-28T10:00:00+00:00")
+        self.assertEqual(self.event.date_start.isoformat(), "2025-03-28T10:00:00+01:00")
         self.assertEqual(self.event.latitude, 52.2297)
         self.assertEqual(self.event.longitude, 21.0122)
 
