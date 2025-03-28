@@ -32,6 +32,8 @@ from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.viewsets import GenericViewSet, ModelViewSet, ReadOnlyModelViewSet
 
+from drf_spectacular.utils import extend_schema
+
 # User = get_user_model()
 
 
@@ -44,17 +46,15 @@ class GetCSRFToken(APIView):
 
 
 class RandomProductView(APIView):
+    @extend_schema(
+        summary="Get a random product",
+        description="Returns a random product from the database. If no products are available, returns a 404 error.",
+    )
     def get(self, request):
         product = Product.objects.order_by("?").first()
         if product:
             return Response(ProductSerializer(product).data)
         return Response({"error": "No products available"}, status=404)
-
-
-class ProductDetailView(RetrieveAPIView):
-    permission_classes = []
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
 
 
 class ProductItemsViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
@@ -69,14 +69,19 @@ class ProductItemsViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         return Response({"message": f"registered {pk}"})
 
 
-class ProductReadOnlyViewSet(ReadOnlyModelViewSet):
-    permission_classes = []
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-
-
 class ProductViewSet(ModelViewSet):
     permission_classes = []
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     # http_method_names = ["get", "post", "put", "patch", "delete", "head", "options", "trace"] # Default
+
+
+# class ProductDetailView(RetrieveAPIView):
+#     permission_classes = []
+#     queryset = Product.objects.all()
+#     serializer_class = ProductSerializer
+
+# class ProductReadOnlyViewSet(ReadOnlyModelViewSet):
+#     permission_classes = []
+#     queryset = Product.objects.all()
+#     serializer_class = ProductSerializer
