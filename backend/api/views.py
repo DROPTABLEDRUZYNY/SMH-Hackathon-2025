@@ -49,7 +49,7 @@ class GetCSRFToken(APIView):
         return Response({"message": "CSRF cookie set"})
 
 
-class TrashPlaceListViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
+class TrashPlaceListViewSet(ModelViewSet):
     permission_classes = []
     queryset = TrashPlace.objects.all()
     serializer_class = TrashPlaceSerializer
