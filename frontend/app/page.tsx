@@ -27,17 +27,20 @@ export default function Page() {
           cleaner, one piece of garbage at a time.
         </p>
 
-        <div className="w-full h-[50vh] bg-green-900 mt-8 rounded-lg flex flex-col justify-end items-center pb-10">
-          <FullScreenMap openPostPage={openPostPage} addingPoints={false}></FullScreenMap>
-          <div className="flex gap-6 bg-transparent">
-            <button className="border-1 border-white hover:bg-green-300/50 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors duration-300">
-              Mark trash
-            </button>
-            <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors duration-300">
-              Collect trash
-            </button>
-          </div>
+        <div className="w-full h-[50vh] bg-green-900 mt-8 rounded-lg">
+          <FullScreenMap openPostPage={openPostPage} addingPoints={false} /> 
         </div>
+
+        <div className="flex justify-center mt-4 gap-4">
+          <button className="border-2 border-white hover:bg-green-300/50 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors duration-300">
+            Mark trash
+          </button>
+          <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors duration-300">
+            Collect trash
+          </button>
+        </div>
+
+
         {/* <Link href={"/activity"}>
           <button
             className="shadow-[inset_0_0_0_2px_#616467] text-black px-12 py-4 rounded-full tracking-widest 
