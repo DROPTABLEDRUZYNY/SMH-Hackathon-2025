@@ -1,7 +1,7 @@
 import json
 from django.test import TestCase
 from django.contrib.auth import get_user_model
-from rest_framework.test import APIClient
+from rest_framework.test import APIClient, APITestCase
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User
@@ -56,7 +56,16 @@ class UserSerializerTest(TestCase):
         self.assertEqual(
             set(data.keys()),
             set(
-                ["id", "first_name", "last_name", "email", "birth_date", "phone_number"]
+                [
+                    "id",
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "birth_date",
+                    "phone_number",
+                    "total_activities",
+                    "total_kg",
+                ]
             ),
         )
         self.assertEqual(data["email"], "test@example.com")
@@ -176,13 +185,14 @@ class UserAPITest(TestCase):
 #             email="test@example.com",
 #             password="password123",
 #         )
-        # self.client.force_authenticate(user=self.user)
+# self.client.force_authenticate(user=self.user)
 
-    # def test_upload_avatar(self):
-    #     url = reverse("user_current")
-    #     avatar = SimpleUploadedFile(
-    #         "avatar.jpg", b"file_content", content_type="image/jpeg"
-    #     )
-    #     response = self.client.patch(url, {"avatar": avatar}, format="multipart")
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertIn("avatar", response.data)
+# def test_upload_avatar(self):
+#     url = reverse("user_current")
+#     avatar = SimpleUploadedFile(
+#         "avatar.jpg", b"file_content", content_type="image/jpeg"
+#     )
+#     response = self.client.patch(url, {"avatar": avatar}, format="multipart")
+#     self.assertEqual(response.status_code, 200)
+#     self.assertIn("avatar", response.data)
+

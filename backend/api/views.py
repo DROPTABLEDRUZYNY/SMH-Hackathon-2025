@@ -1,5 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db.migrations import serializer
+from django.db.models import Count, Sum, Value
+from django.db.models.functions import Coalesce
 from rest_framework.response import Response
 from rest_framework.decorators import action, api_view
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -26,13 +28,17 @@ from rest_framework.generics import (
     UpdateAPIView,
     DestroyAPIView,
 )
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import (
+    AllowAny,
+    IsAuthenticated,
+    IsAuthenticatedOrReadOnly,
+)
 from rest_framework.viewsets import GenericViewSet, ModelViewSet, ReadOnlyModelViewSet
 
 import logging
 
 logger = logging.getLogger(__name__)
-# User = get_user_model()
+User = get_user_model()
 
 
 @method_decorator(ensure_csrf_cookie, name="dispatch")
@@ -43,16 +49,14 @@ class GetCSRFToken(APIView):
         return Response({"message": "CSRF cookie set"})
 
 
-class TrashPlaceListViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
+class TrashPlaceListViewSet(ModelViewSet):
     permission_classes = []
     queryset = TrashPlace.objects.all()
     serializer_class = TrashPlaceSerializer
 
 
 class ActivityViewSet(ModelViewSet):
-    permission_classes = [
-        IsAuthenticatedOrReadOnly
-    ] 
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
 
@@ -64,11 +68,39 @@ class ActivityViewSet(ModelViewSet):
         return queryset
 
     def perform_create(self, serializer):
-        serializer.save(
-            user=self.request.user
+        serializer.save(user=self.request.user)
+
+
+class LeaderboardView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        users = (
+            User.objects.annotate(
+                total_kg=Coalesce(Sum("activities__collected_kg"), Value(0.0)),
+                total_activities=Coalesce(Count("activities"), Value(0)),
+            )
+            .order_by("-total_kg")
+            .values("id", "first_name", "last_name", "total_kg", "total_activities")[
+                :10
+            ]
         )
 
+        formatted_users = [
+            {
+                "id": user["id"],
+                "first_name": user["first_name"],
+                "last_name": user["last_name"],
+                "total_kg": float(user["total_kg"]),
+                "total_activities": user["total_activities"],
+            }
+            for user in users
+        ]
 
+        return Response(formatted_users)
+
+
+# ==================================================
 class RandomProductView(APIView):
     @extend_schema(
         summary="Get a random product",

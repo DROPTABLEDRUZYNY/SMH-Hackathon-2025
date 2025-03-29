@@ -4,17 +4,6 @@ from django.db import models
 
 User = get_user_model()
 
-
-class Product(models.Model):
-    name = models.CharField(max_length=50)
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    description = models.TextField(blank=True)
-    # image = models.ImageField(upload_to='products/', null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.pk} {self.name}"
-
-
 class TrashPlace(models.Model):
     TRASH_LEVEL_CHOICES = [
         (1, "Light"),
@@ -66,3 +55,12 @@ class Activity(models.Model):
 
     def __str__(self):
         return f"Activity at {self.trash_place.name} ({self.pk}) on {self.date}"
+
+class Product(models.Model):
+    name = models.CharField(max_length=50)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    description = models.TextField(blank=True)
+    # image = models.ImageField(upload_to='products/', null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.pk} {self.name}"
