@@ -14,7 +14,7 @@ export default function FullScreenMap() {
   const [mapCenter, setMapCenter] = useState<LatLngExpression>([50.0499, 19.9610]);
   const [mounted, setMounted] = useState(false);
 
-  const scale = 3
+  const scale = 1
 
   type Location = {
     latitude: number;
@@ -27,7 +27,7 @@ export default function FullScreenMap() {
   useEffect(() => {
     async function loadLocations() {
         try {
-          const response = await fetch("https://your-backend.com/api/locations");
+          const response = await fetch("http://localhost:8000/api/trash_places/");
           if (!response.ok) {
             throw new Error("Błąd pobierania danych");
           }
@@ -53,7 +53,6 @@ export default function FullScreenMap() {
       iconSize: [size, size],
       iconAnchor: [size / 2, size / 2],
       popupAnchor: [0, -size / 2],
-      className: "custom-icon"
     });
   }
 
@@ -72,17 +71,6 @@ export default function FullScreenMap() {
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
           attribution='&copy; <a href="https://carto.com/">CARTO</a>'
         />
-        <Marker 
-            position={[50.0499, 19.9610]} 
-            icon={getIcon(scale || 1)} 
-            eventHandlers={{
-              add: (e) => {
-                const marker = e.target;
-                marker.setOpacity(0.5);
-              },
-            }}>
-          <Popup>Software Mansion, Cracow</Popup>
-        </Marker>
         {locations.map((loc, index) => (
           <Marker 
           key={index} 
@@ -96,7 +84,6 @@ export default function FullScreenMap() {
           }}>
             <Popup>
               <strong>{loc.name}</strong> <br />
-              {loc.scale ? `Scale: ${loc.scale}` : "No scale info"}
             </Popup>
           </Marker>
         ))}

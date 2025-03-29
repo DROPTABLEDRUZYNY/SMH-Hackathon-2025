@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import FullScreenMap from "@/components/ui/map";
+import dynamic from "next/dynamic";
+const FullScreenMap = dynamic(() => import("../components/ui/map"), { ssr: false });
 
 export default function Page() {
   return (
@@ -27,7 +30,6 @@ export default function Page() {
             </button>
           </div>
         </div>
-
         {/* <Link href={"/activity"}>
           <button
             className="shadow-[inset_0_0_0_2px_#616467] text-black px-12 py-4 rounded-full tracking-widest 
