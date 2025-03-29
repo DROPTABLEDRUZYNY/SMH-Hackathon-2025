@@ -10,7 +10,7 @@ interface TileData {
   export default function TileText({ tileData }: { tileData: TileData }) {
     return (
       <Link href={tileData.site_url} className="">
-        <div className="w-[292px] h-[292px] flex justify-center items-center">
+        <div className="w-[292px] h-[292px] flex justify-center items-center mx-auto">
         <Image 
             src={tileData.img_url}
             alt={`Zdjęcie przedstawiające ${tileData.title}`}

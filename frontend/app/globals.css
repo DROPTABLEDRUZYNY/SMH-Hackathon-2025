@@ -7,6 +7,65 @@
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
+/* Анимации для градиентных фигур */
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-50px) rotate(5deg);
+  }
+}
+
+@keyframes float-medium {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(30px) translateX(20px);
+  }
+}
+
+@keyframes float-fast {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-50px) scale(1.15);
+  }
+}
+
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+/* Добавляем классы анимаций в Tailwind */
+@layer utilities {
+  .animate-float-slow {
+    animation: float-slow 2s ease-in-out infinite;
+  }
+  .animate-float-medium {
+    animation: float-medium 3s ease-in-out infinite;
+  }
+  .animate-float-fast {
+    animation: float-fast 4s ease-in-out infinite;
+  }
+  .animate-pulse-slow {
+    animation: pulse-slow 10s ease-in-out infinite;
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -123,7 +182,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
     color: rgb(var(--foreground-rgb));
     background-color: rgb(var(--background-rgb));
   }
