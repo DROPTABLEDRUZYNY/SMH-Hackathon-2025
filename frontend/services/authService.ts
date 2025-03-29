@@ -4,18 +4,29 @@ import { BehaviorSubject } from 'rxjs';
 export const userEmail$ = new BehaviorSubject<string | null>(null);
 
 // Inicjalizacja stanu na podstawie ciasteczek
-if (typeof window !== 'undefined') {
-  const email = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("userEmail="))
-    ?.split("=")[1];
-  
-  if (email) {
-    userEmail$.next(decodeURIComponent(email));
+const initializeAuth = () => {
+  if (typeof window !== 'undefined') {
+    const email = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("userEmail="))
+      ?.split("=")[1];
+    
+    if (email) {
+      userEmail$.next(decodeURIComponent(email));
+    }
   }
+};
+
+// Wywołujemy inicjalizację tylko po stronie klienta
+if (typeof window !== 'undefined') {
+  initializeAuth();
 }
 
 export async function getCsrfToken() {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
   await fetch(`${API_PATH}/csrf/`, {
     method: "GET",
     credentials: "include",

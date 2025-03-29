@@ -76,6 +76,15 @@ export default function MainNav() {
           </Button>
         </Link>
 
+        <Link href="/posts">
+          <Button
+            variant="ghost"
+            className="text-white hover:text-white hover:bg-white/10"
+          >
+            Activity Feed
+          </Button>
+        </Link>
+
         <Link href="/be-eco">
           <Button
             variant="ghost"
