@@ -1,59 +1,31 @@
-import Image from "next/image";
-import StatsLineChart from "@/app/ui/stats/chartLine1";
-import ChartBar1 from "@/app/ui/stats/chartBar1";
-import ChartLine2 from "@/app/ui/stats/chartLine2";
+"use client";
+
+// import { ProfileForm } from "@/app/ui/contact/contactForm";
+import FullScreenMap from "@/components/ui/map";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import Modal from "@/components/ui/modal";
+import { PostCreationForm } from "@/app/postCreationForm";
 
 export default function Page() {
-  const lineChartData = [
-    { month: "January", desktop: 186 },
-    { month: "February", desktop: 305 },
-    { month: "March", desktop: 237 },
-    { month: "April", desktop: 73 },
-    { month: "May", desktop: 209 },
-    { month: "June", desktop: 214 },
-  ];
+    const [formOpened, setFormOpened] = useState(false)
 
-  const barChartData = [
-    { day: "Mon", sales: 186, price: 5.2 },
-    { day: "Thu", sales: 245, price: 5.5 },
-    { day: "Wed", sales: 208, price: 5.3 },
-    { day: "Thu", sales: 273, price: 5.7 },
-    { day: "Fri", sales: 309, price: 6.1 },
-    { day: "Sat", sales: 334, price: 6.3 },
-    { day: "Sun", sales: 290, price: 5.9 },
-  ];
-
-  const lineChartConfig = {
-    desktop: {
-      label: "Visitors",
-      color: "var(--chart-1)",
-    },
-  };
-
-  const barChartConfig = {
-    sales: {
-      label: "Activity minutes",
-      color: "var(--chart-1)",
-    },
-    price: {
-      label: "Average activity",
-      color: "var(--chart-2)",
-    },
-  };
+    const openPostPage = (localizationID: number) => {
+      setFormOpened(true)
+    }
 
   return (
-    <div className="flex flex-col md:flex-col gap-4 md:overflow-hidden">
-      <h1>Stats</h1>
-
-      <div className="grid gap-6 md:grid-cols-2">
-        <StatsLineChart data={lineChartData} config={lineChartConfig} />
-        <StatsLineChart data={lineChartData} config={lineChartConfig} />
+    <>
+      <div className="top-0 left-0 w-full h-full fixed z-[10]">
+        <FullScreenMap openPostPage={openPostPage} addingPoints={false} />
       </div>
-
-      <div className="grid gap-6 md:grid-cols-2">
-        <ChartBar1 data={barChartData} config={barChartConfig} />
-        <ChartLine2 data={barChartData} config={barChartConfig} />
-      </div>
-    </div>
+      <div className="fixed bottom-10 left-0 right-0 flex justify-center items-center z-[100]"></div>
+      
+      {formOpened && (
+              <Modal isOpen={formOpened} onClose={() => setFormOpened(false)}>
+                <PostCreationForm trash_place_id={1} />
+              </Modal>
+        )}
+    </>
   );
 }
