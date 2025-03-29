@@ -33,7 +33,7 @@ export default function MainNav() {
   const handleLogout = async () => {
     try {
       await logout();
-      router.push('/');
+      router.push("/");
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -73,6 +73,15 @@ export default function MainNav() {
             className="text-white hover:text-white hover:bg-white/10"
           >
             Rankings
+          </Button>
+        </Link>
+
+        <Link href="/be-eco">
+          <Button
+            variant="ghost"
+            className="text-white hover:text-white hover:bg-white/10"
+          >
+            be ECO
           </Button>
         </Link>
       </div>
