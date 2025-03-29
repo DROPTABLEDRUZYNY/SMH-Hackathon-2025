@@ -16,10 +16,6 @@ export default function MainNav() {
 
   useEffect(() => {
     const checkAuth = () => {
-      const userData = localStorage.getItem("user");
-      if (userData) {
-        setUser(JSON.parse(userData));
-      }
       setIsLoading(false);
     };
 
@@ -33,7 +29,7 @@ export default function MainNav() {
 
   return (
     <nav className="bg-white/10 py-4 backdrop-blur-lg px-6 flex fixed top-5 left-5 right-5 z-50 rounded-lg justify-between items-center">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 bg-transparent">
         <Link href="/" className="text-white text-xl font-bold mr-6">
           Garbage Collector
         </Link>
@@ -69,16 +65,18 @@ export default function MainNav() {
         </Link>
       </div>
 
-      <div>
+      <div className="bg-transparent">
         {isLoading ? (
           <div className="animate-pulse bg-gray-600 h-10 w-32 rounded"></div>
         ) : user ? (
-          <div className="flex items-center">
-            <div className="mr-4 text-right">
-              <div className="text-white font-medium">
+          <div className="flex items-center bg-transparent">
+            <div className="mr-4 text-right bg-transparent">
+              <div className="text-white bg-transparent font-medium">
                 {user.firstName} {user.lastName}
               </div>
-              <div className="text-gray-300 text-sm">{user.email}</div>
+              <div className="text-gray-300 text-sm bg-transparent">
+                {user.email}
+              </div>
             </div>
             <Button
               onClick={handleLogout}
@@ -89,21 +87,23 @@ export default function MainNav() {
             </Button>
           </div>
         ) : (
-          <Button
-            onClick={() => {
-              const testUser = {
-                firstName: "Иван",
-                lastName: "Иванов",
-                email: "ivan@example.com",
-              };
-              localStorage.setItem("user", JSON.stringify(testUser));
-              setUser(testUser);
-            }}
-            variant="outline"
-            className="border-white text-white hover:text-white bg-transparent hover:bg-white/20"
-          >
-            Log in
-          </Button>
+          <Link href="/login" className="bg-transparent">
+            <Button
+              onClick={() => {
+                const testUser = {
+                  firstName: "Yehor",
+                  lastName: "Kharchenko",
+                  email: "yehor@example.com",
+                };
+                localStorage.setItem("user", JSON.stringify(testUser));
+                setUser(testUser);
+              }}
+              variant="outline"
+              className="border-white bg-transparent text-white hover:text-white bg-transparent hover:bg-white/20"
+            >
+              Log in
+            </Button>
+          </Link>
         )}
       </div>
     </nav>
