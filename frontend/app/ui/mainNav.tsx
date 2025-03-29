@@ -87,23 +87,21 @@ export default function MainNav() {
             </Button>
           </div>
         ) : (
-          <Link href="/login" className="bg-transparent">
-            <Button
-              onClick={() => {
-                const testUser = {
-                  firstName: "Yehor",
-                  lastName: "Kharchenko",
-                  email: "yehor@example.com",
-                };
-                localStorage.setItem("user", JSON.stringify(testUser));
-                setUser(testUser);
-              }}
-              variant="outline"
-              className="border-white bg-transparent text-white hover:text-white bg-transparent hover:bg-white/20"
-            >
-              Log in
-            </Button>
-          </Link>
+          <Button
+            onClick={() => {
+              const testUser = {
+                firstName: "Yehor",
+                lastName: "Kharchenko",
+                email: "yehor@example.com",
+              };
+              localStorage.setItem("user", JSON.stringify(testUser));
+              setUser(testUser);
+            }}
+            variant="outline"
+            className="border-white bg-transparent text-white hover:text-white bg-transparent hover:bg-white/20"
+          >
+            Log in
+          </Button>
         )}
       </div>
     </nav>
