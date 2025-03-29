@@ -9,6 +9,7 @@ export default function Page() {
         <h1 className="text-6xl font-bold mb-8 tracking-wider text-white">
           GARBAGE COLLECTOR
         </h1>
+        {}
         <p className="text-xl text-center max-w-2xl mb-10 text-gray-300">
           Spotted trash? Mark it on the map! Ready to clean? Access all marked
           spots and become a waste warrior. Join our mission to make Earth
