@@ -38,12 +38,12 @@ export default function Page() {
 
         <div className="flex justify-center mt-[-100px] relative z-[100] bg-transparent gap-4">
           <Link href="/mark-trash">
-            <button className="border-1 border-white hover:bg-red-500/50 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors duration-300">
+            <button className="border-1 bg-black/40 border-white hover:bg-red-500/50 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors duration-300">
               Mark trash
             </button>
           </Link>
           <Link href="/collect-trash">
-            <button className="bg-transparent hover:bg-green-600 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors duration-300">
+            <button className=" bg-black/40 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors duration-300">
               Collect trash
             </button>
           </Link>
