@@ -132,7 +132,7 @@ export default function FullScreenMap({ openPostPage = noop, addingPoints }: Chi
                         <Popup>
                             <div className="bg-white text-black text-center">
                                 <strong className="block text-lg mb-2">{loc.name}</strong>
-                                {addingPoints && ( 
+                                {!addingPoints && ( 
                                 <button
                                     className="px-6 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 transition duration-300"
                                     onClick={() => {
