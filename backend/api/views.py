@@ -56,7 +56,7 @@ class TrashPlaceListViewSet(ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.filter(isactive=True)
+        queryset = queryset.filter(is_active=True)
         return queryset
 
 
