@@ -64,18 +64,24 @@ const tilesDataEco = [
 ];
 
   return (
-    <div className="flex flex-col md:flex-col gap-4 md:overflow-hidden mt-20">
-      <TilesData />
-      <hr></hr>
+    <div className="flex flex-col gap-12 mt-20 px-4 py-8 max-w-7xl mx-auto">
+      <section className="w-full">
+        <h1 className="text-4xl font-bold text-white mb-8 text-center tracking-tight">
+          Ekologiczne Wskaźniki
+        </h1>
+        <TilesData />
+      </section>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 px-2">
-        {/* {tilesDataFood.map((data, index) => (
-          <TileText key={index} tileData={data} />
-        ))} */}
-        {tilesDataEco.map((data, index) => (
-          <TileText key={index} tileData={data} />
-        ))}
-      </div>
+      <section className="w-full">
+        <h2 className="text-4xl font-bold text-white mb-12 text-center tracking-tight">
+          Artykuły EKO
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 place-items-center">
+          {tilesDataEco.map((data, index) => (
+            <TileText key={index} tileData={data} />
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
