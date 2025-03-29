@@ -6,7 +6,7 @@ import "leaflet/dist/leaflet.css";
 import L, { LatLngExpression } from "leaflet";
 
 interface ChildProps {
-    openPostPage: (id: number) => void;
+    openPostPage?: (id: number) => void;
     addingPoints: boolean;
 }
 
@@ -25,7 +25,9 @@ type LocationToDb = {
     scale?: number;
 }
 
-export default function FullScreenMap({ openPostPage, addingPoints }: ChildProps) {
+const noop = () => {};
+
+export default function FullScreenMap({ openPostPage = noop, addingPoints }: ChildProps) {
     const [locations, setLocations] = useState<Location[]>([]);
     const [mapCenter, setMapCenter] = useState<LatLngExpression>([50.0499, 19.9610]);
     const [mounted, setMounted] = useState(false);
@@ -118,7 +120,7 @@ export default function FullScreenMap({ openPostPage, addingPoints }: ChildProps
     if (!mounted) return <p>Loading map...</p>;
 
     return (
-        <div style={{ width: "100%", height: "50vh" }}>
+        <div style={{ width: "100%", height: "100%" }}>
             <MapContainer center={mapCenter} zoom={13} style={{ width: "100%", height: "100%" }}>
                 <TileLayer
                     url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
@@ -130,6 +132,7 @@ export default function FullScreenMap({ openPostPage, addingPoints }: ChildProps
                         <Popup>
                             <div className="bg-white text-black text-center">
                                 <strong className="block text-lg mb-2">{loc.name}</strong>
+                                {addingPoints && ( 
                                 <button
                                     className="px-6 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 transition duration-300"
                                     onClick={() => {
@@ -137,6 +140,7 @@ export default function FullScreenMap({ openPostPage, addingPoints }: ChildProps
                                 >
                                     Wykonane!
                                 </button>
+                                )}
                             </div>
                         </Popup>
                     </Marker>
