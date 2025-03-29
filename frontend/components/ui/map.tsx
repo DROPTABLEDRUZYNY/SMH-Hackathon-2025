@@ -82,7 +82,7 @@ export default function FullScreenMap({ openPostPage, addingPoints }: ChildProps
             setLocations([...locations, newLocation]);
             setNewMarker(null);
 
-            fetch("http://localhost:8000/api/add_location/", {
+            fetch("http://localhost:8000/api/trash_places/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -118,7 +118,7 @@ export default function FullScreenMap({ openPostPage, addingPoints }: ChildProps
                 {locations.map((loc, index) => (
                     <Marker key={index} position={[loc.latitude, loc.longitude]} icon={getIcon(loc.scale || 1)}>
                         <Popup>
-                            <div className="text-center">
+                            <div className="bg-white text-black text-center">
                                 <strong className="block text-lg mb-2">{loc.name}</strong>
                                 <button
                                     className="px-6 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 transition duration-300"
@@ -142,7 +142,7 @@ export default function FullScreenMap({ openPostPage, addingPoints }: ChildProps
                         }}
                     >
                         <Popup>
-                            <div className="text-center">
+                            <div className="text-black bg-white text-center">
                                 <input
                                     type="text"
                                     className="border p-2 rounded w-full mb-2"
