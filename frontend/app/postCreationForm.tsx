@@ -218,7 +218,7 @@ export function PostCreationForm({ trash_place_id }: PostCreationFormProps) {
           <Button 
             type="submit" 
             variant="outline" 
-            className="rounded"
+            className="rounded text-black hover:bg-gray-300"
             disabled={isSubmitting}
           >
             {isSubmitting ? "Submitting..." : "Submit"}
