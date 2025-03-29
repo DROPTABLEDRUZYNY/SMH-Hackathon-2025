@@ -23,7 +23,7 @@ export default function FullScreenMap({ openPostPage, addingPoints }: ChildProps
     const [mounted, setMounted] = useState(false);
     const [newMarker, setNewMarker] = useState<Location | null>(null);
     const [newMarkerName, setNewMarkerName] = useState("");
-    const newMarkerRef = useRef<L.Marker | null>(null); // Referencja do markera
+    const newMarkerRef = useRef<L.Marker | null>(null);
 
     useEffect(() => {
         async function loadLocations() {
@@ -67,7 +67,7 @@ export default function FullScreenMap({ openPostPage, addingPoints }: ChildProps
 
                     setTimeout(() => {
                         if (newMarkerRef.current) {
-                            newMarkerRef.current.openPopup(); // Otwórz popup po ustawieniu markera
+                            newMarkerRef.current.openPopup();
                         }
                     }, 0);
                 }
@@ -78,8 +78,30 @@ export default function FullScreenMap({ openPostPage, addingPoints }: ChildProps
 
     function handleConfirm() {
         if (newMarker && newMarkerName.trim()) {
-            setLocations([...locations, { ...newMarker, name: newMarkerName }]);
+            const newLocation = { ...newMarker, name: newMarkerName };
+            setLocations([...locations, newLocation]);
             setNewMarker(null);
+
+            fetch("http://localhost:8000/api/add_location/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(newLocation),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Błąd podczas dodawania lokalizacji");
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Dodano nową lokalizację:", data);
+            })
+            .catch(error => {
+                console.error("Błąd:", error);
+            });
+    
         }
     }
 
