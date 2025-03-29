@@ -53,14 +53,14 @@ export default function Page() {
   ];
 
 const tilesDataEco = [
-    { title: "artykul", img_url: "/be-eco/articles-eco/eco1.jpg", site_url: "/" },
-    { title: "artykul", img_url: "/be-eco/articles-eco/eco2.jpg", site_url: "/" },
-    { title: "artykul", img_url: "/be-eco/articles-eco/eco3.jpg", site_url: "/" },
-    { title: "artykul", img_url: "/be-eco/articles-eco/eco4.jpg", site_url: "/" },
-    { title: "artykul", img_url: "/be-eco/articles-eco/eco5.jpg", site_url: "/" },
-    { title: "artykul", img_url: "/be-eco/articles-eco/eco6.jpg", site_url: "/" },
-    { title: "artykul", img_url: "/be-eco/articles-eco/eco7.jpg", site_url: "/" },
-    { title: "artykul", img_url: "/be-eco/articles-eco/eco8.jpg", site_url: "/" },
+    { title: "Jak segregować śmieci?", img_url: "/be-eco/articles-eco/eco1.jpg", site_url: "/" },
+    { title: "Najważniejsze EKO organizacje", img_url: "/be-eco/articles-eco/eco2.jpg", site_url: "/" },
+    { title: "Energooszczędne żarówki - dlaczego warto", img_url: "/be-eco/articles-eco/eco3.jpg", site_url: "/" },
+    { title: "Chrońmy lasy! 5 sposobów na pomoc naturze", img_url: "/be-eco/articles-eco/eco4.jpg", site_url: "/" },
+    { title: "Twój EKOlogiczny dom", img_url: "/be-eco/articles-eco/eco5.jpg", site_url: "/" },
+    { title: "Jak pomagać zwierzętom?", img_url: "/be-eco/articles-eco/eco6.jpg", site_url: "/" },
+    { title: "5 sposobów na skuteczny recykling DIY", img_url: "/be-eco/articles-eco/eco7.jpg", site_url: "/" },
+    { title: "Sadzenie drzew - jak mogę pomóc?", img_url: "/be-eco/articles-eco/eco8.jpg", site_url: "/" },
 ];
 
   return (

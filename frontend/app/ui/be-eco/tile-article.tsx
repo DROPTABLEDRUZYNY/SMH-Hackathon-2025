@@ -10,13 +10,15 @@ interface TileData {
   export default function TileText({ tileData }: { tileData: TileData }) {
     return (
       <Link href={tileData.site_url} className="">
+        <div className="w-[292px] h-[292px] flex justify-center items-center">
         <Image 
             src={tileData.img_url}
             alt={`Zdjęcie przedstawiające ${tileData.title}`}
-            width={400}
-            height={400}
+            width={292}
+            height={292}
             className="rounded-2xl"
         />
+        </div>
         <label className="block text-xl text-center mt-2 capitalize">{tileData.title}</label>
       </Link>
     );
