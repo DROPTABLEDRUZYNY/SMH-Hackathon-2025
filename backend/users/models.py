@@ -4,6 +4,7 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
+from django.db.models.functions import Coalesce
 from django.utils import timezone
 from phone_field import PhoneField
 import logging
@@ -82,7 +83,15 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
-
+    
+    def get_total_kg_and_activities(self):
+        total_kg = self.activities.aggregate(total_kg=Coalesce(models.Sum("collected_kg"), 0.0))["total_kg"]
+        total_activities = self.activities.aggregate(total_activities=models.Count("id"))["total_activities"]
+        return {
+            "total_kg": total_kg,
+            "total_activities": total_activities,
+        }
+        
     # username_validator = UnicodeUsernameValidator()
 
     # Usefull fields:

@@ -23,7 +23,7 @@ export default function UserActivity({ userData }: {userData: UserData}) {
       >
         <div className="flex items-center">
           <Image
-            src={userData.avatar_img_url}
+            src="/avatars/avatar1.png"
             alt={`${userData.name}'s profile picture`}
             className="mr-4 rounded-full"
             width={40}
@@ -47,19 +47,9 @@ export default function UserActivity({ userData }: {userData: UserData}) {
 
       <hr></hr>
       <div className="flex flex-col w-full px-7 py-4">
-        
-        <Image
-        src={userData.route_img_url}
-        alt={`${userData.name} route image`}
-        width={400}
-        height={400}
-        className="block rounded-xl my-2"
-        />
-        
         <p className="pl-1 pt-2">
             {userData.text}
         </p>
-
       </div>
     </div>
   );

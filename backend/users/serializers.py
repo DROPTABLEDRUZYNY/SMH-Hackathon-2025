@@ -9,7 +9,8 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
-    #avatar = serializers.ImageField(required=False, allow_null=True)
+    total_kg = serializers.SerializerMethodField()
+    total_activities = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -20,8 +21,16 @@ class UserSerializer(serializers.ModelSerializer):
             "email",
             "birth_date",
             "phone_number",
-            #"avatar",
+            "total_kg",
+            "total_activities",
+            # "avatar",
         ]
+
+    def get_total_kg(self, obj):
+        return obj.get_total_kg_and_activities()["total_kg"]
+
+    def get_total_activities(self, obj):
+        return obj.get_total_kg_and_activities()["total_activities"]
 
     def validate_first_name(self, value):
         return value.lower().capitalize()

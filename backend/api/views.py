@@ -78,14 +78,26 @@ class LeaderboardView(APIView):
         users = (
             User.objects.annotate(
                 total_kg=Coalesce(Sum("activities__collected_kg"), Value(0.0)),
-                total_activities=Count("activities"),
+                total_activities=Coalesce(Count("activities"), Value(0)),
             )
             .order_by("-total_kg")
-            .values("id", "first_name", "last_name", "total_kg", 
-                    "total_activities")[:10]
+            .values("id", "first_name", "last_name", "total_kg", "total_activities")[
+                :10
+            ]
         )
 
-        return Response(users)
+        formatted_users = [
+            {
+                "id": user["id"],
+                "first_name": user["first_name"],
+                "last_name": user["last_name"],
+                "total_kg": float(user["total_kg"]),
+                "total_activities": user["total_activities"],
+            }
+            for user in users
+        ]
+
+        return Response(formatted_users)
 
 
 # ==================================================
