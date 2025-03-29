@@ -1,10 +1,16 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
+    #avatar = serializers.ImageField(required=False, allow_null=True)
+
     class Meta:
         model = User
         fields = [
@@ -14,6 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
             "email",
             "birth_date",
             "phone_number",
+            #"avatar",
         ]
 
     def validate_first_name(self, value):
@@ -28,7 +35,14 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "email","phone_number", "birth_date", "password"]
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "phone_number",
+            "birth_date",
+            "password",
+        ]
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
