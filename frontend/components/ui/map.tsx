@@ -185,7 +185,7 @@ export default function FullScreenMap({
                   onChange={(e) => setNewMarkerName(e.target.value)}
                 />
                 <button
-                  className="px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-300"
+                  className="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-300"
                   onClick={handleConfirm}
                 >
                   Dodaj miejsce
