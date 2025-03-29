@@ -3,28 +3,40 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { logout, userEmail$ } from "@/services/authService";
+import { useRouter } from "next/navigation";
 
 interface User {
-  firstName: string;
-  lastName: string;
   email: string;
 }
 
 export default function MainNav() {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    const checkAuth = () => {
+    // Subskrybuj się do zmian w stanie autentykacji
+    const subscription = userEmail$.subscribe((email) => {
+      if (email) {
+        setUser({ email });
+      } else {
+        setUser(null);
+      }
       setIsLoading(false);
-    };
+    });
 
-    checkAuth();
+    // Cleanup subskrypcji
+    return () => subscription.unsubscribe();
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.push('/');
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   return (
@@ -72,9 +84,6 @@ export default function MainNav() {
           <div className="flex items-center bg-transparent">
             <div className="mr-4 text-right bg-transparent">
               <div className="text-white bg-transparent font-medium">
-                {user.firstName} {user.lastName}
-              </div>
-              <div className="text-gray-300 text-sm bg-transparent">
                 {user.email}
               </div>
             </div>
@@ -87,21 +96,14 @@ export default function MainNav() {
             </Button>
           </div>
         ) : (
-          <Button
-            onClick={() => {
-              const testUser = {
-                firstName: "Yehor",
-                lastName: "Kharchenko",
-                email: "yehor@example.com",
-              };
-              localStorage.setItem("user", JSON.stringify(testUser));
-              setUser(testUser);
-            }}
-            variant="outline"
-            className="border-white bg-transparent text-white hover:text-white bg-transparent hover:bg-white/20"
-          >
-            Log in
-          </Button>
+          <Link href="/login">
+            <Button
+              variant="outline"
+              className="border-white bg-transparent text-white hover:text-white hover:bg-white/20"
+            >
+              Log in
+            </Button>
+          </Link>
         )}
       </div>
     </nav>

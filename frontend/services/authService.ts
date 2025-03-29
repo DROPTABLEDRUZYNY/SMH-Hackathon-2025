@@ -1,4 +1,19 @@
 const API_PATH = "http://localhost:8000/api";
+import { BehaviorSubject } from 'rxjs';
+
+export const userEmail$ = new BehaviorSubject<string | null>(null);
+
+// Inicjalizacja stanu na podstawie ciasteczek
+if (typeof window !== 'undefined') {
+  const email = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("userEmail="))
+    ?.split("=")[1];
+  
+  if (email) {
+    userEmail$.next(decodeURIComponent(email));
+  }
+}
 
 export async function getCsrfToken() {
   await fetch(`${API_PATH}/csrf/`, {
@@ -31,6 +46,10 @@ export async function login(email: string, password: string) {
     throw new Error(errorData.error || "Login failed");
   }
 
+  // Zapisz email do ciasteczek i zaktualizuj observable
+  document.cookie = `userEmail=${encodeURIComponent(email)}; path=/; max-age=2592000`;
+  userEmail$.next(email);
+
   const sessionid = document.cookie
     .split("; ")
     .find((row) => row.startsWith("sessionid="))
@@ -53,4 +72,9 @@ export async function logout() {
   if (!res.ok) {
     throw new Error("Logout failed");
   }
+
+  // Usuń ciasteczka i zaktualizuj observable
+  document.cookie = "userEmail=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
+  document.cookie = "sessionid=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
+  userEmail$.next(null);
 }
