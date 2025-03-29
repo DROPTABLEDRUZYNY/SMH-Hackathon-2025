@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, SetStateAction } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L, { LatLngExpression } from "leaflet";
 
 interface ChildProps {
-    openPostPage: () => void;
+    openPostPage: (id: number) => void;
     addingPoints: boolean;
 }
 
@@ -15,30 +15,39 @@ type Location = {
     longitude: number;
     name: string;
     scale?: number;
+    id: number;
 };
+
+type LocationToDb = {
+    latitude: number;
+    longitude: number;
+    name: string;
+    scale?: number;
+}
 
 export default function FullScreenMap({ openPostPage, addingPoints }: ChildProps) {
     const [locations, setLocations] = useState<Location[]>([]);
     const [mapCenter, setMapCenter] = useState<LatLngExpression>([50.0499, 19.9610]);
     const [mounted, setMounted] = useState(false);
-    const [newMarker, setNewMarker] = useState<Location | null>(null);
+    const [newMarker, setNewMarker] = useState<LocationToDb | null>(null);
     const [newMarkerName, setNewMarkerName] = useState("");
     const newMarkerRef = useRef<L.Marker | null>(null);
 
-    useEffect(() => {
-        async function loadLocations() {
-            try {
-                const response = await fetch("http://localhost:8000/api/trash_places/");
-                if (!response.ok) throw new Error("Błąd pobierania danych");
+    async function loadLocations() {
+        try {
+            const response = await fetch("http://localhost:8000/api/trash_places/");
+            if (!response.ok) throw new Error("Błąd pobierania danych");
 
-                const data = await response.json();
-                setLocations(data);
+            const data = await response.json();
+            setLocations(data);
 
-                if (data.length > 0) setMapCenter([data[0].latitude, data[0].longitude]);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
+            if (data.length > 0) setMapCenter([data[0].latitude, data[0].longitude]);
+        } catch (error) {
+            console.error("Error fetching data:", error);
         }
+    }
+
+    useEffect(() => {
         loadLocations();
         setMounted(true);
     }, []);
@@ -76,13 +85,12 @@ export default function FullScreenMap({ openPostPage, addingPoints }: ChildProps
         return null;
     }
 
-    function handleConfirm() {
+    const handleConfirm = async() => {
         if (newMarker && newMarkerName.trim()) {
             const newLocation = { ...newMarker, name: newMarkerName };
-            setLocations([...locations, newLocation]);
             setNewMarker(null);
 
-            fetch("http://localhost:8000/api/trash_places/", {
+            await fetch("http://localhost:8000/api/trash_places/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -101,6 +109,8 @@ export default function FullScreenMap({ openPostPage, addingPoints }: ChildProps
             .catch(error => {
                 console.error("Błąd:", error);
             });
+
+            loadLocations()
     
         }
     }
@@ -122,7 +132,8 @@ export default function FullScreenMap({ openPostPage, addingPoints }: ChildProps
                                 <strong className="block text-lg mb-2">{loc.name}</strong>
                                 <button
                                     className="px-6 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 transition duration-300"
-                                    onClick={openPostPage}
+                                    onClick={() => {
+                                        openPostPage(loc.id)}}
                                 >
                                     Wykonane!
                                 </button>
