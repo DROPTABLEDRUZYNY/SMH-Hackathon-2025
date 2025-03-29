@@ -75,6 +75,15 @@ export default function MainNav() {
             Rankings
           </Button>
         </Link>
+
+        <Link href="/be-eco">
+          <Button
+            variant="ghost"
+            className="text-white hover:text-white hover:bg-white/10"
+          >
+            be ECO
+          </Button>
+        </Link>
       </div>
 
       <div className="bg-transparent">
