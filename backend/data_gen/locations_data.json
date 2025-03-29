@@ -1,0 +1,482 @@
+[
+  {
+    "name": "Telewizor porzucony w parku",
+    "latitude": 51.24897,
+    "longitude": 23.89302,
+    "scale": 2
+  },
+  {
+    "name": "smieci pozostawione pod drzewem",
+    "latitude": 50.49607,
+    "longitude": 15.92967,
+    "scale": 1
+  },
+  {
+    "name": "Fotel zalegajacy na chodniku",
+    "latitude": 52.13668,
+    "longitude": 14.33468,
+    "scale": 3
+  },
+  {
+    "name": "Puste butelki w lesie",
+    "latitude": 49.10543,
+    "longitude": 14.63454,
+    "scale": 3
+  },
+  {
+    "name": "Zniszczony rower w krzakach",
+    "latitude": 51.12518,
+    "longitude": 17.00426,
+    "scale": 2
+  },
+  {
+    "name": "Stare opony w poblizu placu zabaw",
+    "latitude": 49.62649,
+    "longitude": 15.38554,
+    "scale": 2
+  },
+  {
+    "name": "Wyrzucone kartony w centrum miasta",
+    "latitude": 51.36952,
+    "longitude": 18.21107,
+    "scale": 2
+  },
+  {
+    "name": "Stol po imprezie w parku",
+    "latitude": 53.91494,
+    "longitude": 15.88271,
+    "scale": 1
+  },
+  {
+    "name": "Opakowania po jedzeniu w parku miejskim",
+    "latitude": 53.73457,
+    "longitude": 15.28795,
+    "scale": 3
+  },
+  {
+    "name": "Zlamana lawka na skwerze",
+    "latitude": 52.8166,
+    "longitude": 21.87817,
+    "scale": 2
+  },
+  {
+    "name": "Niedopalki papierosow przy lawce",
+    "latitude": 49.40968,
+    "longitude": 20.80389,
+    "scale": 1
+  },
+  {
+    "name": "Torba pelna smieci w zagajniku",
+    "latitude": 50.2525,
+    "longitude": 19.67455,
+    "scale": 2
+  },
+  {
+    "name": "Wyrzucone ubrania na plazy",
+    "latitude": 53.1751,
+    "longitude": 14.84661,
+    "scale": 3
+  },
+  {
+    "name": "Zniszczony fotel na polanie",
+    "latitude": 50.03167,
+    "longitude": 16.27785,
+    "scale": 3
+  },
+  {
+    "name": "Zimowe rekawiczki porzucone w parku",
+    "latitude": 51.8402,
+    "longitude": 14.42147,
+    "scale": 1
+  },
+  {
+    "name": "Stare gazety zostawione na chodniku",
+    "latitude": 53.3294,
+    "longitude": 16.68048,
+    "scale": 1
+  },
+  {
+    "name": "Plastikowa butelka w rzece",
+    "latitude": 50.29255,
+    "longitude": 21.34653,
+    "scale": 2
+  },
+  {
+    "name": "Popielniczka pelna smieci w parku",
+    "latitude": 54.53921,
+    "longitude": 16.74998,
+    "scale": 2
+  },
+  {
+    "name": "Wyrzucone pudelka na chodniku",
+    "latitude": 49.41913,
+    "longitude": 18.5744,
+    "scale": 1
+  },
+  {
+    "name": "Zatrzymany pojazd w poblizu drzew",
+    "latitude": 51.1115,
+    "longitude": 18.38523,
+    "scale": 2
+  },
+  {
+    "name": "Pojemniki po napojach w poblizu przystanku",
+    "latitude": 50.9754,
+    "longitude": 21.08945,
+    "scale": 3
+  },
+  {
+    "name": "Zlamana deska w parku",
+    "latitude": 54.57174,
+    "longitude": 20.36305,
+    "scale": 3
+  },
+  {
+    "name": "Wyrzucone zabawki wsrod drzew",
+    "latitude": 49.90482,
+    "longitude": 23.78002,
+    "scale": 1
+  },
+  {
+    "name": "Wyrzucone jedzenie na trawie",
+    "latitude": 51.33094,
+    "longitude": 21.88639,
+    "scale": 1
+  },
+  {
+    "name": "Zbutwiale drewno w lesie",
+    "latitude": 50.56015,
+    "longitude": 21.80461,
+    "scale": 3
+  },
+  {
+    "name": "Zniszczona kanapa na ulicy",
+    "latitude": 53.47709,
+    "longitude": 22.65196,
+    "scale": 1
+  },
+  {
+    "name": "Polamany parasol w parku",
+    "latitude": 49.24646,
+    "longitude": 14.79185,
+    "scale": 3
+  },
+  {
+    "name": "Resztki jedzenia przy koszu",
+    "latitude": 51.19104,
+    "longitude": 19.00168,
+    "scale": 2
+  },
+  {
+    "name": "Zawodowy sprzet w opuszczonym miejscu",
+    "latitude": 54.40632,
+    "longitude": 22.00801,
+    "scale": 3
+  },
+  {
+    "name": "Plastikowa torba w stawie",
+    "latitude": 50.8068,
+    "longitude": 22.18135,
+    "scale": 2
+  },
+  {
+    "name": "Wyrzucone kartony w zakatku",
+    "latitude": 51.18335,
+    "longitude": 15.0248,
+    "scale": 3
+  },
+  {
+    "name": "Sluchawki porzucone przy drodze",
+    "latitude": 52.28659,
+    "longitude": 18.89435,
+    "scale": 3
+  },
+  {
+    "name": "Telewizor bez ekranu na poboczu",
+    "latitude": 52.62707,
+    "longitude": 17.15992,
+    "scale": 2
+  },
+  {
+    "name": "Siedzisko do fotela w krzakach",
+    "latitude": 51.94248,
+    "longitude": 22.71944,
+    "scale": 2
+  },
+  {
+    "name": "Wyrzucone kapcie na trawie",
+    "latitude": 54.7312,
+    "longitude": 16.68972,
+    "scale": 1
+  },
+  {
+    "name": "Zabawki dla dzieci porzucone w parku",
+    "latitude": 49.6386,
+    "longitude": 17.43752,
+    "scale": 2
+  },
+  {
+    "name": "Otwarty karton w poblizu sklepu",
+    "latitude": 50.67017,
+    "longitude": 15.52752,
+    "scale": 1
+  },
+  {
+    "name": "Stare papiery na ulicy",
+    "latitude": 51.06499,
+    "longitude": 16.6655,
+    "scale": 2
+  },
+  {
+    "name": "Porzucony bagaz w okolicach stacji",
+    "latitude": 49.30521,
+    "longitude": 19.76522,
+    "scale": 2
+  },
+  {
+    "name": "Wyrzucone akcesoria do sportow wodnych na plazy",
+    "latitude": 53.63002,
+    "longitude": 22.57829,
+    "scale": 1
+  },
+  {
+    "name": "Zbutwiale krzeslo przy rzece",
+    "latitude": 52.70407,
+    "longitude": 20.70524,
+    "scale": 1
+  },
+  {
+    "name": "Stare skrzynki na owoce w parku",
+    "latitude": 54.10973,
+    "longitude": 17.88493,
+    "scale": 2
+  },
+  {
+    "name": "Wyrzucone opakowania po fast foodzie",
+    "latitude": 54.34515,
+    "longitude": 22.39791,
+    "scale": 3
+  },
+  {
+    "name": "Wyrzucony namiot na polanie",
+    "latitude": 50.29235,
+    "longitude": 22.12598,
+    "scale": 2
+  },
+  {
+    "name": "Puszki po napojach przy wejsciu do parku",
+    "latitude": 52.32194,
+    "longitude": 23.01011,
+    "scale": 2
+  },
+  {
+    "name": "Pusty plecak w parku",
+    "latitude": 54.63963,
+    "longitude": 22.00033,
+    "scale": 3
+  },
+  {
+    "name": "Wyrzucony sprzet RTV na ulicy",
+    "latitude": 54.46374,
+    "longitude": 20.75593,
+    "scale": 2
+  },
+  {
+    "name": "Zrzut z roslinami w ogrodzie",
+    "latitude": 49.82277,
+    "longitude": 16.04644,
+    "scale": 1
+  },
+  {
+    "name": "Stare ksiazki na krawezniku",
+    "latitude": 53.08748,
+    "longitude": 22.84732,
+    "scale": 2
+  },
+  {
+    "name": "Zniszczony stol na rynku",
+    "latitude": 52.28462,
+    "longitude": 23.93626,
+    "scale": 2
+  },
+  {
+    "name": "Wyrzucone torby z odpadkami w lesie",
+    "latitude": 50.43948,
+    "longitude": 22.14405,
+    "scale": 2
+  },
+  {
+    "name": "Resztki materialow budowlanych w parku",
+    "latitude": 50.35426,
+    "longitude": 16.83877,
+    "scale": 2
+  },
+  {
+    "name": "Szesc opakowan po kawie przy budce",
+    "latitude": 53.90611,
+    "longitude": 21.47256,
+    "scale": 2
+  },
+  {
+    "name": "Zatrzymany motor na poboczu drogi",
+    "latitude": 50.0355,
+    "longitude": 16.63589,
+    "scale": 1
+  },
+  {
+    "name": "Wyrzucone krzesla na trawie",
+    "latitude": 54.54169,
+    "longitude": 21.60116,
+    "scale": 1
+  },
+  {
+    "name": "Tluste papierki po fast foodzie w parku",
+    "latitude": 53.80209,
+    "longitude": 23.11245,
+    "scale": 2
+  },
+  {
+    "name": "Zniszczony fotel ogrodowy w parku",
+    "latitude": 53.68481,
+    "longitude": 21.85956,
+    "scale": 1
+  },
+  {
+    "name": "Zupa w kartonie wsrod drzew",
+    "latitude": 51.74983,
+    "longitude": 19.85694,
+    "scale": 1
+  },
+  {
+    "name": "Resztki drewna przy stawie",
+    "latitude": 49.5225,
+    "longitude": 15.45221,
+    "scale": 3
+  },
+  {
+    "name": "Wyrzucone odziez na plazy",
+    "latitude": 49.18872,
+    "longitude": 21.5831,
+    "scale": 2
+  },
+  {
+    "name": "Wyrzucony telefon na chodniku",
+    "latitude": 50.54539,
+    "longitude": 22.79405,
+    "scale": 2
+  },
+  {
+    "name": "Zuzyte pilki w parku",
+    "latitude": 53.564,
+    "longitude": 20.63778,
+    "scale": 3
+  },
+  {
+    "name": "Niedopalone znicze na grobach",
+    "latitude": 51.72918,
+    "longitude": 16.58251,
+    "scale": 2
+  },
+  {
+    "name": "Skorzana torba porzucona w parku",
+    "latitude": 52.66539,
+    "longitude": 17.05519,
+    "scale": 2
+  },
+  {
+    "name": "Zbutwiala deska na smietniku",
+    "latitude": 54.29135,
+    "longitude": 20.72963,
+    "scale": 1
+  },
+  {
+    "name": "Pudelka po pizzy na chodniku",
+    "latitude": 52.86858,
+    "longitude": 22.51379,
+    "scale": 2
+  },
+  {
+    "name": "Resztki po grillu przy jeziorze",
+    "latitude": 49.65466,
+    "longitude": 17.4236,
+    "scale": 3
+  },
+  {
+    "name": "Zamarzniety stol w parku",
+    "latitude": 50.8103,
+    "longitude": 17.66342,
+    "scale": 1
+  },
+  {
+    "name": "Dzinsy pozostawione na ulicy",
+    "latitude": 50.43255,
+    "longitude": 19.11347,
+    "scale": 2
+  },
+  {
+    "name": "Resztki po imprezie w parku",
+    "latitude": 53.74849,
+    "longitude": 17.5243,
+    "scale": 2
+  },
+  {
+    "name": "Pusta skrzynka z narzedziami przy drodze",
+    "latitude": 49.22042,
+    "longitude": 22.53274,
+    "scale": 2
+  },
+  {
+    "name": "Wyrzucony komputer w okolicy budowy",
+    "latitude": 54.81689,
+    "longitude": 17.36077,
+    "scale": 2
+  },
+  {
+    "name": "Wyrzucone buty w parku",
+    "latitude": 51.61986,
+    "longitude": 17.08093,
+    "scale": 2
+  },
+  {
+    "name": "Uzywane ubrania porzucone w poblizu drogi",
+    "latitude": 49.94593,
+    "longitude": 16.4081,
+    "scale": 1
+  },
+  {
+    "name": "Stare plyty winylowe na skraju lasu",
+    "latitude": 54.38507,
+    "longitude": 16.67657,
+    "scale": 1
+  },
+  {
+    "name": "Zuzyte sprzety w parku",
+    "latitude": 49.78193,
+    "longitude": 22.1653,
+    "scale": 3
+  },
+  {
+    "name": "Wyrzucone opakowania po napojach w lesie",
+    "latitude": 49.74463,
+    "longitude": 14.56513,
+    "scale": 3
+  },
+  {
+    "name": "Zlamany stol na rynku",
+    "latitude": 52.15356,
+    "longitude": 18.80096,
+    "scale": 2
+  },
+  {
+    "name": "Zniszczona opona na chodniku",
+    "latitude": 54.21496,
+    "longitude": 20.34259,
+    "scale": 3
+  },
+  {
+    "name": "Resztki po grillu na plazy",
+    "latitude": 54.38333,
+    "longitude": 19.46269,
+    "scale": 3
+  }
+]
