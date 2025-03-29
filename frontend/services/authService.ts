@@ -1,6 +1,6 @@
 const API_PATH = "http://localhost:8000/api";
 
-async function getCsrfToken() {
+export async function getCsrfToken() {
   await fetch(`${API_PATH}/csrf/`, {
     method: "GET",
     credentials: "include",
