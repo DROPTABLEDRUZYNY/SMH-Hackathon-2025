@@ -1,4 +1,4 @@
-import TileHealth from "./tile-health";
+import TileData from "./tile-health";
 import imieninyData from "@/public/zdrowie/imieniny.json";
 import kartkaZKalendarzaData from "@/public/zdrowie/kartka_z_kalendarza.json";
 
@@ -11,7 +11,8 @@ export  default async function TilesHealth() {
   const tilesData = kartkaZKalendarzaData[randomIndex];
 
   const weather = "Zachmurzenie duże, temperatura 12°C, wiatr 4 km/h"; // TODO: fetch from API
-  
+  //TODO PM10: 53
+
   const today = new Date();
   const dateForSearch = 
     `${String(today.getDate()).padStart(2, "0")}.${String(today.getMonth() + 1).padStart(2, "0")}`;
@@ -31,31 +32,31 @@ export  default async function TilesHealth() {
 
   if (!todayNameDay)
     todayNameDay = {
-      date: "15.12",
+      date: "29.03",
       name_day: "Celina, Walerian",
     };
 
 
   return (
-    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-      <TileHealth
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 ">
+      <TileData
         tileData={{
           title: `${dayOfWeek} ${formattedDate}`,
           text: `Imieniny obchodzą dzisiaj: ${todayNameDay.name_day}`,
         }}
       />
-      <TileHealth tileData={{ title: "Pogoda", text: weather }} />
-      <TileHealth
-        tileData={{ title: "Porada zdrowotna", text: tilesData.health_advise }}
+      <TileData tileData={{ title: "Pogoda", text: weather }} />
+      <TileData
+        tileData={{ title: "EKO Porada", text: tilesData.health_advise }}
       />
-      <TileHealth
+      <TileData
         tileData={{
-          title: "Zdrowy posiłek na dziś",
+          title: "Jak oszczędzać?",
           text: tilesData.healthy_meal,
         }}
       />
-      <TileHealth tileData={{ title: "Ciekawostka", text: tilesData.trivia }} />
-      <TileHealth tileData={{ title: "Żart", text: tilesData.joke }} />
+      <TileData tileData={{ title: "PM 10:", text: "53", variant:3  }} />
+      <TileData tileData={{ title: "PM 2,5:", text: "81", variant:1 }} />
     </div>
   );
 }
