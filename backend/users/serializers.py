@@ -9,6 +9,8 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
+    #avatar = serializers.ImageField(required=False, allow_null=True)
+
     class Meta:
         model = User
         fields = [
@@ -18,6 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
             "email",
             "birth_date",
             "phone_number",
+            #"avatar",
         ]
 
     def validate_first_name(self, value):

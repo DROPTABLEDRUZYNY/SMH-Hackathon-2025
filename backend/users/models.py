@@ -44,12 +44,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         "1st name", max_length=150, default="John", blank=True
     )
     last_name = models.CharField("last name", max_length=150, default="Doe", blank=True)
-
     birth_date = models.DateField(default=datetime.date(2005, 1, 1))
     phone_number = PhoneField(
         blank=True, null=False, help_text="Numer telefonu w formacie +48 123 456 789"
     )
-
+    # avatar = models.ImageField(
+    #     upload_to="avatars/", null=True, blank=True, help_text="User avatar"
+    # )
     date_joined = models.DateTimeField("date joined", default=timezone.now)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

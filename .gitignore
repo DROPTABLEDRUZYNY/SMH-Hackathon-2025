@@ -7,7 +7,7 @@
 *.pyc
 __pycache__
 
-media
+#media
 
 # Backup files # 
 *.bak 

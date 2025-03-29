@@ -177,6 +177,9 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -218,21 +221,20 @@ LOGGING = {
             "formatter": "verbose",
         },
         "console": {
-            "level": "INFO",
+            "level": "WARNING",
             "class": "logging.StreamHandler",
         },
     },
-    
     "loggers": {
         "django": {
             "handlers": ["file", "console"],
             "level": "INFO",
             "propagate": True,
         },
-        'django.utils.autoreload': { 
-            'handlers': ['file'],
-            'level': 'INFO',
-            'propagate': False,
+        "django.utils.autoreload": {
+            "handlers": ["file"],
+            "level": "INFO",
+            "propagate": False,
         },
         "users": {
             "handlers": ["file", "console"],

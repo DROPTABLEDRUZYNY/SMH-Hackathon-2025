@@ -7,6 +7,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User
 from .serializers import UserSerializer
 from django.urls import reverse
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 User = get_user_model()
 
@@ -167,3 +168,21 @@ class UserAPITest(TestCase):
     def test_get_current_user_unauthenticated(self):
         response = self.client.get(self.current_user_url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+# class UserAvatarTest(TestCase):
+#     def setUp(self):
+#         self.user = User.objects.create_user(
+#             email="test@example.com",
+#             password="password123",
+#         )
+        # self.client.force_authenticate(user=self.user)
+
+    # def test_upload_avatar(self):
+    #     url = reverse("user_current")
+    #     avatar = SimpleUploadedFile(
+    #         "avatar.jpg", b"file_content", content_type="image/jpeg"
+    #     )
+    #     response = self.client.patch(url, {"avatar": avatar}, format="multipart")
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertIn("avatar", response.data)
