@@ -33,7 +33,7 @@ export default function MainNav() {
   const handleLogout = async () => {
     try {
       await logout();
-      router.push('/');
+      router.push("/");
     } catch (error) {
       console.error("Logout failed:", error);
     }
