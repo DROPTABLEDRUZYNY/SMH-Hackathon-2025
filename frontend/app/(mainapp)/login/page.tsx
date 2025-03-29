@@ -34,7 +34,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10">
+    <div className="max-w-md mx-auto mt-24">
       <h1 className="text-2xl font-bold mb-4">Login</h1>
       {error && <p className="text-red-500">{error}</p>}
       {sessionId && <p className="text-green-500">Session ID: {sessionId}</p>}
