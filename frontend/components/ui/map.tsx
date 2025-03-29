@@ -66,12 +66,13 @@ export default function FullScreenMap({
   }, []);
 
   function getIcon(scale: number) {
-    const size = scale === 3 ? 40 : scale === 2 ? 30 : 20;
+    const size = scale === 3 ? 80 : scale === 2 ? 60 : 40;
     return new L.Icon({
       iconUrl: "/trashBin.webp",
       iconSize: [size, size],
       iconAnchor: [size / 2, size / 2],
       popupAnchor: [0, -size / 2],
+      className: "brightness-[0.3]"
     });
   }
 
@@ -130,7 +131,7 @@ export default function FullScreenMap({
   if (!mounted) return <p>Loading map...</p>;
 
   return (
-    <div style={{ width: "100%", height: "100%" }}>
+    <div style={{filter: "brightness(3.0)", width: "100%", height: "100%" }}>
       <MapContainer
         center={mapCenter}
         zoom={13}
@@ -150,7 +151,7 @@ export default function FullScreenMap({
             icon={getIcon(loc.scale || 1)}
           >
             <Popup>
-              <div className="bg-white text-black text-center">
+              <div style={{filter: "brightness(0.5)"}}  className="bg-white text-black text-center">
                 <strong className="block text-lg mb-2">{loc.name}</strong>
                 {!addingPoints && (
                   <button
