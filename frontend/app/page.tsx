@@ -25,7 +25,7 @@ export default function Page() {
         </p>
 
         <div className="w-full h-[50vh] bg-green-900 mt-8 rounded-lg flex flex-col justify-end items-center pb-10">
-          <FullScreenMap openPostPage={openPostPage}></FullScreenMap>
+          <FullScreenMap openPostPage={openPostPage} addingPoints={false}></FullScreenMap>
           <div className="flex gap-6 bg-transparent">
             <button className="border-1 border-white hover:bg-green-300/50 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors duration-300">
               Mark trash
