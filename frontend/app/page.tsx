@@ -5,13 +5,16 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import Modal from "@/components/ui/modal";
+import { PostCreationForm } from "./postCreationForm";
 const FullScreenMap = dynamic(() => import("../components/ui/map"), { ssr: false });
 
 
 export default function Page() {
+  const [formOpened, setFormOpened] = useState(false)
 
   const openPostPage = (localizationID: number) => {
-    console.info("POST PAGE OPENED")
+    setFormOpened(true)
   }
   
   return (
@@ -27,9 +30,9 @@ export default function Page() {
           cleaner, one piece of garbage at a time.
         </p>
 
-        <div className="w-full h-[50vh] bg-green-900 mt-8 rounded-lg">
+        {!formOpened && (<div className="w-full h-[50vh] bg-green-900 mt-8 rounded-lg">
           <FullScreenMap openPostPage={openPostPage} addingPoints={false} /> 
-        </div>
+        </div>)}
 
         <div className="flex justify-center mt-4 gap-4">
           <button className="border-2 border-white hover:bg-green-300/50 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors duration-300">
@@ -39,6 +42,12 @@ export default function Page() {
             Collect trash
           </button>
         </div>
+
+        {formOpened && (
+              <Modal isOpen={formOpened} onClose={() => setFormOpened(false)}>
+                <PostCreationForm trash_place_id={1} />
+              </Modal>
+        )}
 
 
         {/* <Link href={"/activity"}>
