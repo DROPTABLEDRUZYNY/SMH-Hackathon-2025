@@ -12,6 +12,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.utils.decorators import method_decorator
 from django.views import View
+from rest_framework.parsers import MultiPartParser, FormParser
 
 import json
 from users.serializers import (
@@ -85,10 +86,12 @@ class LoginView(View):
 )
 class LogoutView(View):
     def post(self, request):
-        logger.info(f"User logging out: {request.user.email if request.user.is_authenticated else 'Anonymous'}")
+        logger.info(
+            f"User logging out: {request.user.email if request.user.is_authenticated else 'Anonymous'}"
+        )
         if not request.user.is_authenticated:
             return JsonResponse({"message": "User already logged out"})
-        
+
         email = request.user.email
         logout(request)
         logger.info(f"Logged out user: {email}")
@@ -144,6 +147,7 @@ class UserViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
 class RetrieveUpdateCurrentUserView(RetrieveAPIView, UpdateAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
+    #parser_classes = [MultiPartParser, FormParser]
 
     def get_object(self):
         return self.request.user
