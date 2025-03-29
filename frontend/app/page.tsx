@@ -6,6 +6,10 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 const FullScreenMap = dynamic(() => import("../components/ui/map"), { ssr: false });
 
+const openPostPage = () => {
+  console.info("POST PAGE OPENED")
+}
+
 export default function Page() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 bg-black mt-20">
@@ -30,6 +34,7 @@ export default function Page() {
             </button>
           </div>
         </div>
+        <FullScreenMap openPostPage={openPostPage}></FullScreenMap>
         {/* <Link href={"/activity"}>
           <button
             className="shadow-[inset_0_0_0_2px_#616467] text-black px-12 py-4 rounded-full tracking-widest 
