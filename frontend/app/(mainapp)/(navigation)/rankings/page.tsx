@@ -57,7 +57,7 @@ export default function Page() {
   }
 
   return (
-    <div className="flex flex-col gap-4 md:overflow-hidden mt-32 justify-center items-center">
+    <div className="flex flex-col gap-4 md:overflow-hidden mt-32 bg-transparent justify-center items-center">
       <h1 className="text-3xl font-bold text-white mb-6 glow">Rankings</h1>
 
       {/* Заголовки колонок */}
