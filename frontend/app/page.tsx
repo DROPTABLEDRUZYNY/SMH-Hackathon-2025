@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import FullScreenMap from "@/components/ui/map";
 
 export default function Page() {
   return (
@@ -16,6 +17,7 @@ export default function Page() {
             Let's LiveActive!{" "}
           </button>
         </Link>
+        <FullScreenMap></FullScreenMap>
       </main>
     </div>
   );
