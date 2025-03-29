@@ -54,6 +54,11 @@ class TrashPlaceListViewSet(ModelViewSet):
     queryset = TrashPlace.objects.all()
     serializer_class = TrashPlaceSerializer
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(isactive=True)
+        return queryset
+
 
 class ActivityViewSet(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -62,9 +67,9 @@ class ActivityViewSet(ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        user = self.request.user
-        if user.is_authenticated:
-            queryset = queryset.filter(user=user)
+        # user = self.request.user
+        # if user.is_authenticated:
+        #    queryset = queryset.filter(user=user)
         return queryset
 
     def perform_create(self, serializer):
