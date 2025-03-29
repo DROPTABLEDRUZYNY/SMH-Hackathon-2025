@@ -41,6 +41,6 @@ Do it in cmd instead of powershell.
 
 - Server should run at http://localhost:3000
 
-- You can login using example account `login: admin` `password: admin`
+- You can login using example account `email: admin@admin.pl` `password: admin`
 
 \*-Development is faster to run but switching between sites might take longer due to jit compiling. If you click through routes and wait for 10-20s it should be faster

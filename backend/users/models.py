@@ -6,6 +6,10 @@ from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 from django.utils import timezone
 from phone_field import PhoneField
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class UserManager(BaseUserManager):
 
@@ -36,12 +40,17 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField("email address", unique=True)
-    first_name = models.CharField("1st name", max_length=150, default="John", blank=True)
+    first_name = models.CharField(
+        "1st name", max_length=150, default="John", blank=True
+    )
     last_name = models.CharField("last name", max_length=150, default="Doe", blank=True)
-
     birth_date = models.DateField(default=datetime.date(2005, 1, 1))
-    phone_number = PhoneField(blank=True, null=False, help_text='Numer telefonu w formacie +48 123 456 789')
-
+    phone_number = PhoneField(
+        blank=True, null=False, help_text="Numer telefonu w formacie +48 123 456 789"
+    )
+    # avatar = models.ImageField(
+    #     upload_to="avatars/", null=True, blank=True, help_text="User avatar"
+    # )
     date_joined = models.DateTimeField("date joined", default=timezone.now)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -57,17 +66,25 @@ class User(AbstractBaseUser, PermissionsMixin):
             self.first_name = self.first_name.lower().capitalize()
         if self.last_name:
             self.last_name = self.last_name.lower().capitalize()
+        if self.pk:
+            logger.info(f"Updating user {self.pk}: {self.email}")
+        else:
+            logger.info(f"Creating new user: {self.email}")
         super().save(*args, **kwargs)
-        
+
     def clean(self):
         super().clean()
-        self.email = self.__class__.objects.normalize_email(self.email) 
-        
+        self.email = self.__class__.objects.normalize_email(self.email)
+
+    def delete(self, *args, **kwargs):
+        logger.warning(f"Deleting user {self.pk}: {self.email}")
+        super().delete(*args, **kwargs)
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
-    
-    #username_validator = UnicodeUsernameValidator()
-    
+
+    # username_validator = UnicodeUsernameValidator()
+
     # Usefull fields:
     # ROLE_CHOICES = [
     #     ('STUDENT', 'Student'),
