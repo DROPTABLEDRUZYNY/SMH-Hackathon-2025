@@ -7,10 +7,10 @@ interface TileData {
     site_url: string;
   }
   
-  export default function TileDish({ tileData }: { tileData: TileData }) {
+  export default function TileText({ tileData }: { tileData: TileData }) {
     return (
       <Link href={tileData.site_url} className="">
-        <Image
+        <Image 
             src={tileData.img_url}
             alt={`Zdjęcie przedstawiające ${tileData.title}`}
             width={400}
