@@ -1,14 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import NavLinks from "@/app/ui/navLinks";
-import SomeLogo from "@/app/ui/someLogo";
-import { PowerIcon } from "@heroicons/react/24/outline";
-import LogoutButton from "./LogoutButton";
+import Link from "next/link";
 
-// Тип для пользователя
 interface User {
   firstName: string;
   lastName: string;
@@ -16,14 +11,10 @@ interface User {
 }
 
 export default function MainNav() {
-  // Состояние для отслеживания авторизации пользователя
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Имитация проверки авторизации пользователя
   useEffect(() => {
-    // Здесь должен быть реальный запрос к API для проверки авторизации
-    // Для примера используем localStorage
     const checkAuth = () => {
       const userData = localStorage.getItem("user");
       if (userData) {
@@ -35,63 +26,86 @@ export default function MainNav() {
     checkAuth();
   }, []);
 
-  // Функция для выхода из системы
   const handleLogout = () => {
     localStorage.removeItem("user");
     setUser(null);
   };
 
   return (
-    <div className="flex h-full flex-col px-3 py-4 md:px-2">
-      <Link
-        className="mb-2 flex h-20 items-end justify-start rounded-xl bg-amber-500 p-4 md:h-40"
-        href="/"
-      >
-        <div className="w-32 text-white md:w-40">
-          <SomeLogo />
-        </div>
-      </Link>
-      <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
-        <NavLinks />
-        <div className="hidden h-auto w-full grow rounded-xl bg-gray-50 md:block"></div>
-        <form>
-          {isLoading ? (
-            <div className="animate-pulse bg-gray-600 h-10 w-32 rounded"></div>
-          ) : user ? (
-            <div className="flex items-center">
-              <div className="mr-4 text-right">
-                <div className="text-white font-medium">
-                  {user.firstName} {user.lastName}
-                </div>
-                <div className="text-gray-300 text-sm">{user.email}</div>
-              </div>
+    <nav className="bg-white/10 py-4 backdrop-blur-lg px-6 flex fixed top-5 left-5 right-5 z-50 rounded-lg justify-between items-center">
+      <div className="flex items-center gap-4">
+        <Link href="/" className="text-white text-xl font-bold mr-6">
+          Garbage Collector
+        </Link>
+
+        {user && (
+          <>
+            <Link href="/mark-trash">
               <Button
-                onClick={handleLogout}
-                variant="outline"
-                className="border-white text-white hover:bg-green-800"
+                variant="ghost"
+                className="text-white hover:text-white hover:bg-white/10"
               >
-                Log out
+                Mark trash
               </Button>
-            </div>
-          ) : (
-            <Button
-              onClick={() => {
-                // Для демонстрации создаем тестового пользователя
-                const testUser = {
-                  firstName: "Иван",
-                  lastName: "Иванов",
-                  email: "ivan@example.com",
-                };
-                localStorage.setItem("user", JSON.stringify(testUser));
-                setUser(testUser);
-              }}
-              className="bg-green-500 hover:bg-green-600 text-white"
-            >
-              Log in
-            </Button>
-          )}
-        </form>
+            </Link>
+            <Link href="/collect-trash">
+              <Button
+                variant="ghost"
+                className="text-white hover:text-white hover:bg-white/10"
+              >
+                Collect trash
+              </Button>
+            </Link>
+          </>
+        )}
+
+        <Link href="/rankings">
+          <Button
+            variant="ghost"
+            className="text-white hover:text-white hover:bg-white/10"
+          >
+            Rankings
+          </Button>
+        </Link>
       </div>
-    </div>
+
+      <div>
+        {isLoading ? (
+          <div className="animate-pulse bg-gray-600 h-10 w-32 rounded"></div>
+        ) : user ? (
+          <div className="flex items-center">
+            <div className="mr-4 text-right">
+              <div className="text-white font-medium">
+                {user.firstName} {user.lastName}
+              </div>
+              <div className="text-gray-300 text-sm">{user.email}</div>
+            </div>
+            <Button
+              onClick={handleLogout}
+              variant="outline"
+              className="border-white text-white hover:text-white bg-transparent hover:bg-white/25"
+            >
+              Log out
+            </Button>
+          </div>
+        ) : (
+          <Button
+            onClick={() => {
+              const testUser = {
+                firstName: "Иван",
+                lastName: "Иванов",
+                email: "ivan@example.com",
+              };
+              localStorage.setItem("user", JSON.stringify(testUser));
+              setUser(testUser);
+            }}
+            variant="outline"
+            className="border-white text-white hover:text-white bg-transparent hover:bg-white/20"
+          >
+            Log in
+          </Button>
+        )}
+      </div>
+    </nav>
   );
 }
