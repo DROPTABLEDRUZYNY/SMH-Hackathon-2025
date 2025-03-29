@@ -6,8 +6,8 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.utils.decorators import method_decorator
 from drf_spectacular.utils import extend_schema
 
-from .models import Product
-from .serializers import ProductSerializer
+from .models import Product, TrashPlace, Activity
+from .serializers import ProductSerializer, TrashPlaceSerializer, ActivitySerializer
 from users.serializers import EmptySerializer
 
 from rest_framework.views import APIView
@@ -26,7 +26,7 @@ from rest_framework.generics import (
     UpdateAPIView,
     DestroyAPIView,
 )
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.viewsets import GenericViewSet, ModelViewSet, ReadOnlyModelViewSet
 
 import logging
@@ -41,6 +41,32 @@ class GetCSRFToken(APIView):
 
     def get(self, request):
         return Response({"message": "CSRF cookie set"})
+
+
+class TrashPlaceListViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
+    permission_classes = []
+    queryset = TrashPlace.objects.all()
+    serializer_class = TrashPlaceSerializer
+
+
+class ActivityViewSet(ModelViewSet):
+    permission_classes = [
+        IsAuthenticatedOrReadOnly
+    ] 
+    queryset = Activity.objects.all()
+    serializer_class = ActivitySerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        if user.is_authenticated:
+            queryset = queryset.filter(user=user)
+        return queryset
+
+    def perform_create(self, serializer):
+        serializer.save(
+            user=self.request.user
+        )
 
 
 class RandomProductView(APIView):

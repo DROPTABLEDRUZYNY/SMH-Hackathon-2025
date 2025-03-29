@@ -20,27 +20,27 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ["id", "name", "price", "description"]
 
 
-class EventSerializer(serializers.ModelSerializer):
+# class EventSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = TrashPlace
-        fields = [
-            "id",
-            "name",
-            "description",
-            "date_start",
-            "latitude",
-            "longitude",
-            # "participants",
-        ]
+#     class Meta:
+#         model = TrashPlace
+#         fields = [
+#             "id",
+#             "name",
+#             "description",
+#             "date_start",
+#             "latitude",
+#             "longitude",
+#             # "participants",
+#         ]
 
-    def create(self, validated_data):
-        logger.info(f"Creating new event with data: {validated_data}")
-        return super().create(validated_data)
+#     def create(self, validated_data):
+#         logger.info(f"Creating new event with data: {validated_data}")
+#         return super().create(validated_data)
 
-    def update(self, instance, validated_data):
-        logger.info(f"Updating event {instance.id} with data: {validated_data}")
-        return super().update(instance, validated_data)
+#     def update(self, instance, validated_data):
+#         logger.info(f"Updating event {instance.id} with data: {validated_data}")
+#         return super().update(instance, validated_data)
 
 
 class TrashPlaceSerializer(serializers.ModelSerializer):
@@ -75,4 +75,6 @@ class ActivitySerializer(serializers.ModelSerializer):
             "trash_place_id",
             "collected_kg",
             "cleaned_all",
+            "before_image",
+            "after_image",
         ]
