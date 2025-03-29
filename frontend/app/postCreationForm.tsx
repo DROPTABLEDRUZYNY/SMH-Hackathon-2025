@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { getCsrfToken } from "@/services/authService";
 
 const formSchema = z.object({
   description: z
@@ -26,7 +27,7 @@ const formSchema = z.object({
     .max(1023, {
       message: "Message must be at most 1023 characters.",
     }),
-  weight: z
+  collected_kg: z
     .number()
     .min(0, {
       message: "Weight must be a positive number.",
@@ -34,48 +35,58 @@ const formSchema = z.object({
     .max(1000, {
       message: "Weight must be less than 1000 kg.",
     }),
-  latitude: z
-    .number()
-    .min(-90, {
-      message: "Latitude must be between -90 and 90.",
-    })
-    .max(90, {
-      message: "Latitude must be between -90 and 90.",
-    }),
-  longitude: z
-    .number()
-    .min(-180, {
-      message: "Longitude must be between -180 and 180.",
-    })
-    .max(180, {
-      message: "Longitude must be between -180 and 180.",
-    }),
+  cleaned_all: z.boolean().default(false),
+  before_image: z.any().optional(),
+  after_image: z.any().optional(),
 });
 
-export function PostCreationForm() {
+interface PostCreationFormProps {
+  trash_place_id: number;
+}
+
+export function PostCreationForm({ trash_place_id }: PostCreationFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       description: "",
-      weight: 0,
-      latitude: 0,
-      longitude: 0,
+      collected_kg: 0,
+      cleaned_all: false,
+      before_image: undefined,
+      after_image: undefined,
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsSubmitting(true);
-      console.log('fetching');
-      const response = await fetch('/api/posts', {
+      const formData = new FormData();
+      formData.append('description', values.description);
+      formData.append('collected_kg', values.collected_kg.toString());
+      formData.append('trash_place_id', trash_place_id.toString());
+      formData.append('cleaned_all', values.cleaned_all.toString());
+      
+      if (values.before_image) {
+        formData.append('before_image', values.before_image);
+      }
+      if (values.after_image) {
+        formData.append('after_image', values.after_image);
+      }
+      let csrfToken = await getCsrfToken();
+
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+      }
+
+      const response = await fetch('http://localhost:8000/api/activities/', {
         method: 'POST',
+        body: formData,
         headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
+            "X-CSRFToken": csrfToken || "",
+          },
+          credentials: "include",
       });
-      console.log(response);
+
       if (!response.ok) {
         throw new Error('Failed to submit post');
       }
@@ -112,7 +123,7 @@ export function PostCreationForm() {
           />
           <FormField
             control={form.control}
-            name="weight"
+            name="collected_kg"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Weight (kg)</FormLabel>
@@ -126,50 +137,80 @@ export function PostCreationForm() {
                   />
                 </FormControl>
                 <FormDescription>
-                  Enter the weight of collected garbage
+                  Enter the weight of collected garbage (kg)
                 </FormDescription>
                 <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="cleaned_all"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                <FormControl>
+                  <input
+                    type="checkbox"
+                    checked={field.value}
+                    onChange={field.onChange}
+                    className="h-4 w-4 rounded border-gray-300"
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel>Is the area cleaned?</FormLabel>
+                  <FormDescription>
+                    Check this box if you have completely cleaned the area
+                  </FormDescription>
+                </div>
               </FormItem>
             )}
           />
           <div className="grid grid-cols-2 gap-4">
             <FormField
               control={form.control}
-              name="latitude"
-              render={({ field }) => (
+              name="before_image"
+              render={({ field: { onChange, value, ...field } }) => (
                 <FormItem>
-                  <FormLabel>Latitude</FormLabel>
+                  <FormLabel>Before Image</FormLabel>
                   <FormControl>
                     <Input
-                      type="number"
-                      step="any"
-                      placeholder="Enter latitude"
+                      type="file"
+                      accept="image/*"
                       className="rounded"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        onChange(file);
+                      }}
                       {...field}
-                      onChange={e => field.onChange(parseFloat(e.target.value))}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormDescription>
+                    Upload a photo of the area before cleaning
+                  </FormDescription>
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name="longitude"
-              render={({ field }) => (
+              name="after_image"
+              render={({ field: { onChange, value, ...field } }) => (
                 <FormItem>
-                  <FormLabel>Longitude</FormLabel>
+                  <FormLabel>After Image</FormLabel>
                   <FormControl>
                     <Input
-                      type="number"
-                      step="any"
-                      placeholder="Enter longitude"
+                      type="file"
+                      accept="image/*"
                       className="rounded"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        onChange(file);
+                      }}
                       {...field}
-                      onChange={e => field.onChange(parseFloat(e.target.value))}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormDescription>
+                    Upload a photo of the area after cleaning
+                  </FormDescription>
                 </FormItem>
               )}
             />
