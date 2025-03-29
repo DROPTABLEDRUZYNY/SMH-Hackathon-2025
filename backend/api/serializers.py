@@ -6,20 +6,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class ProductSerializer(serializers.ModelSerializer):
-    def create(self, validated_data):
-        logger.info(f"Creating new product with data: {validated_data}")
-        return super().create(validated_data)
-
-    def update(self, instance, validated_data):
-        logger.info(f"Updating product {instance.id} with data: {validated_data}")
-        return super().update(instance, validated_data)
-
-    class Meta:
-        model = Product
-        fields = ["id", "name", "price", "description"]
-
-
 class TrashPlaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = TrashPlace
@@ -48,10 +34,23 @@ class ActivitySerializer(serializers.ModelSerializer):
             "id",
             "description",
             "date",
-            "trash_place",
             "trash_place_id",
+            "trash_place",
             "collected_kg",
             "cleaned_all",
             "before_image",
             "after_image",
         ]
+
+class ProductSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        logger.info(f"Creating new product with data: {validated_data}")
+        return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        logger.info(f"Updating product {instance.id} with data: {validated_data}")
+        return super().update(instance, validated_data)
+
+    class Meta:
+        model = Product
+        fields = ["id", "name", "price", "description"]
